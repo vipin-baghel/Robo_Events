@@ -1,0 +1,81 @@
+[
+    {
+        "id": 1,
+        "teams": "Karmayodha Bots",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/az-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1723369069WhatsApp%20Image%202024-08-11%20at%201.35.07%20PM.jpeg",
+        "points": 9
+    },
+    {
+        "id": 2,
+        "teams": "Robo Odisha",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1720633153ROBO%20ODISHA%20LOGO%202.png",
+        "points": 8
+    },
+    {
+        "id": 3,
+        "teams": "Anima The Aero Club",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1710771350KYB%20logo.png",
+        "points": 6
+    },
+    {
+        "id": 4,
+        "teams": "Team Orcus",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1722866699orcus_logo.jpg",
+        "points": 6
+    },
+    {
+        "id": 5,
+        "teams": "IEM ROBO CLUB",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1719378131IMG-20240626-WA0002.jpg",
+        "points": 6
+    },
+    {
+        "id": 6,
+        "teams": "AI Naba’a Innovative Team",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/iq-flag.jpg",
+        "logo": "https://technoxian.com/images/tx-favicon.png",
+        "points": 5
+    },
+    {
+        "id": 7,
+        "teams": "IEM ROBO CLUB",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://technoxian.com/images/tx-favicon.png",
+        "points": 5
+    },
+    {
+        "id": 8,
+        "teams": "USTM WARRIOR",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1688829345images-(2).jpeg",
+        "points": 5
+    },
+    {
+        "id": 9,
+        "teams": "Invincibles",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1720513719Untitled-1%20(1).png",
+        "points": 5
+    },
+    {
+        "id": 10,
+        "teams": "Jahesh 9",
+        "flag": "https://www.technoxian.com/images/flag/iranflag.png",
+        "logo": "https://roboclub.technoxian.com/mydoc/1723887494photo13142195165.jpg",
+        "points": 5
+    },
+    {
+        "id": 11,
+        "teams": "Eastern botz",
+        "flag": "https://www.worldatlas.com/r/w425/img/flag/in-flag.jpg",
+        "logo": "https://roboclub.technoxian.com/mydoc/1722713757images.jpeg",
+        "points": 5
+    }
+
+
+]

@@ -1,0 +1,48 @@
+[
+        {
+            "id": 1,
+            "championship": {
+                "id": 1,
+                "name": "Robo War 2025",
+                "start_date": "2025-07-01",
+                "end_date": "2025-07-31",
+                "is_active": true,
+                "location": "Bhopal, Madhya Pradesh, India"
+            },
+            "name": "Robo Race",
+            "slug": "robo-race",
+            "short_description": "",
+            "display_in_navigation": true
+        },
+        {
+            "id": 2,
+            "championship": {
+                "id": 1,
+                "name": "Robo War 2025",
+                                "start_date": "2025-07-01",
+                "end_date": "2025-07-31",
+                "is_active": true,
+                "location": "Bhopal, Madhya Pradesh, India"
+            },
+            "name": "Line Follower",
+            "slug": "line-follower",
+            "short_description": "",
+            "display_in_navigation": true
+        },
+        {
+            "id": 3,
+            "championship": {
+                "id": 1,
+                "name": "Robo War 2025",
+                "start_date": "2025-07-01",
+                "end_date": "2025-07-31",
+                "is_active": true,
+                "location": "Bhopal, Madhya Pradesh, India"
+            },
+            "name": "Robo Soccer",
+            "slug": "robo-soccer",
+            "short_description": "",
+            "display_in_navigation": true
+        }
+    ]
+

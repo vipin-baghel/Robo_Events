@@ -1,0 +1,82 @@
+[
+    {
+        "id":1,
+        "competition": "Innovation",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Innovation-logo.png"
+    },
+    {
+        "id":2,
+        "competition": "Robo Soccer",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Robo-Soccer-Logo.png"
+    },
+    {
+        "id":3,
+        "competition": "Wrc Bots Combat",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Bot Combat-logo.png"
+    },
+    {
+        "id":4,
+        "competition": "Robo Race",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Robo-Race-Logo.png"
+    },
+    {
+        "id":5,
+        "competition": "Fastest line Follower",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Fastline-logo.png"
+    },
+    {
+        "id":6,
+        "competition": "Water Rocket",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Water-Rocket-logo.png"
+    },
+    {
+        "id":7,
+        "competition": "Maze Solver",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Maze-Solver-Logo.png"
+    },
+    {
+        "id":8,
+        "competition": "RC Craft",
+        "logo": "https://www.technoxian.com/images/competitionLogo/RC-Craft.png"
+    },
+    {
+        "id":9,
+        "competition": "Drone Rescue",
+        "logo": "https://www.technoxian.com/images/competitionLogo/Drone-Logo.png"
+    },
+    {
+        "id":10,
+        "competition": "Robo Hockey",
+        "logo": "https://www.technoxian.com/images/competitionLogo/robo-hockey.png"
+    },
+    {
+        "id":11,
+        "competition": "RC Car Racing",
+        "logo": "https://www.technoxian.com/images/competitionLogo/rc-racing-car.png"
+    },
+    {
+        "id":12,
+        "competition": "Sumo Bots",
+        "logo": "https://www.technoxian.com/images/competitionLogo/sumobot.png"
+    },
+    {
+        "id":13,
+        "competition": "RC Car Racing",
+        "logo": "https://www.technoxian.com/images/competitionLogo/rc-racing-car.png"
+    },
+    {
+        "id":14,
+        "competition": "Drone Soccer",
+        "logo": "https://www.technoxian.com/images/competitionLogo/drone-soccer.png"
+    },
+    {
+        "id":15,
+        "competition": "Drone Race",
+        "logo": "https://www.technoxian.com/images/competitionLogo/drone-race.png"
+    },
+    {
+        "id":16,
+        "competition": "RC Car Racing",
+        "logo": "https://www.technoxian.com/images/competitionLogo/rc-racing-car.png"
+    }
+]

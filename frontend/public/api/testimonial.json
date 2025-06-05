@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "fullName": "RajKumar Sharma",
+        "designation": "President AICRA",
+        "role": "Chairman - International Federation of eSports (IFeS)",
+        "summary": "TechnoXian stands as a beacon of technological brilliance, illuminating the path towards a future where India leads in innovation. This competition not only fosters a culture of excellence but also propels the nation into the forefront of robotics education. It is an instrumental force in embracing the transformative power of technology, laying the foundation for a more robust and futuristic India",
+        "image": "https://www.technoxian.com/images/Rajkumar.jpg"
+    },
+    {
+        "id": 2,
+        "fullName": "Yogi Adityanath",
+        "designation": "Chief Minister of UP",
+        "summary": "TechnoXian serves as a crucible for India's brightest minds. This competition is not just a showcase of innovation; it is a testament to our commitment to embracing robotics education. By nurturing young talent and providing a platform for their creative genius, TechnoXian is instrumental in propelling India into a future where technological prowess knows no bounds.",
+        "image": "https://www.technoxian.com/images/Yogi-Adityanath.jpg"
+    },
+    {
+        "id": 3,
+        "fullName": "Narendra Modi",
+        "designation": "Prime Minister of India",
+        "summary": "Technology is the transformative force in shaping the future of sports. We are committed to leveraging technology to enhance athletic performance, develop infrastructure, and foster a vibrant sports ecosystem in India. Our vision aims to position India as a global leader in technology-driven sports, leading to greater inclusivity, innovation, and success in the sporting arena.",
+        "image": "https://www.technoxian.com/images/Narendra-Modi.jpg"
+    }
+]

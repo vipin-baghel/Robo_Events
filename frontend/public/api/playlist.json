@@ -1,0 +1,65 @@
+[
+    {
+        "id": 1,
+        "title": "Innovation Challenge",
+        "image": "https://www.technoxian.com/images/TX-innovation-contest.jpg",
+        "article_url": "https://www.technoxian.com/innovation-contest",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29Aujhbfi9ph_11DlIjHxoWP3Uv"
+    },
+    {
+        "id": 2,
+        "title": "WRC RoboSoccer",
+        "image": "https://www.technoxian.com/images/WRC-RoboSoccer.jpg",
+        "article_url": "https://www.technoxian.com/robosoccer",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29Aujj7BajkwDbfJ982EAUIyXb_"
+    },
+    {
+        "id": 3,
+        "title": "WRC BotsCombat",
+        "image": "https://www.technoxian.com/images/wrc-bots-combat.jpg",
+        "article_url": "https://www.technoxian.com/wrc-bots-combat",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29Aujhxh1vtAKT7GC1dMDMl99d5"
+    },
+    {
+        "id": 4,
+        "title": "WRC ROBO RACE",
+        "image": "https://www.technoxian.com/images/wrc-ROBO-RACE.jpg",
+        "article_url": "https://www.technoxian.com/robo-race",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29AujhHpTyw_eii0LN_zlrgj-wt"
+    },
+    {
+        "id": 5,
+        "title": "WRC Fastest Line Follower",
+        "image": "https://www.technoxian.com/images/wrc-flf.jpg",
+        "article_url": "https://www.technoxian.com/fastest-line-follower",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29Aujh19SuzPDA9WDMlnV08vyph"
+    },
+    {
+        "id": 6,
+        "title": "WRC Water Rocket",
+        "image": "https://www.technoxian.com/images/wrc-water-rocket.jpg",
+        "article_url": "https://www.technoxian.com/water-rocket",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29AujgM7CpBlb3dxxZXLehQax40"
+    },
+    {
+        "id": 7,
+        "title": "WRC Maze Solver",
+        "image": "https://www.technoxian.com/images/wrc-maze-solver.jpg",
+        "article_url": "https://www.technoxian.com/maze-solver",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29AujhBczcj_wITK01TljUDbvg6"
+    },
+    {
+        "id": 8,
+        "title": "WRC Rc Craft",
+        "image": "https://www.technoxian.com/images/wrc-rccraft.jpg",
+        "article_url": "https://www.technoxian.com/rc-craft",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29AujgyiMkFgYsw7AIyzrPJ753C"
+    },
+    {
+        "id": 9,
+        "title": "Drone Challenge",
+        "image": "https://www.technoxian.com/images/Drone-Challenge.jpg",
+        "article_url": "https://www.technoxian.com/drone",
+        "watch_url": "https://www.youtube.com/playlist?list=PLDTqId29AujgMEU0JiD0DPDcGlH2iPZGW"
+    }
+]

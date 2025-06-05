@@ -1,0 +1,61 @@
+# --- Global Python/Django ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.sqlite3
+*.log
+*.pot
+*.pyc
+
+# --- Global Environment/IDE ---
+.env
+.env.*
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- Virtual Environments ---
+.venv/
+ENV/
+
+# --- Test & Coverage ---
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# --- Backend (Django/Python) ---
+backend/.env
+backend/.env.*
+backend/__pycache__/
+backend/venv/
+backend/ENV/
+backend/media/
+backend/staticfiles/
+backend/static/
+backend/.DS_Store
+backend/*.sqlite3
+backend/db.sqlite3
+backend/.coverage
+backend/htmlcov/
+backend/.migrations/
+backend/.pytest_cache/
+
+# --- Frontend (Node/React/Next.js) ---
+frontend/node_modules/
+frontend/.next/
+# frontend/.env.local
+# frontend/.env.development.local
+# frontend/.env.test.local
+# frontend/.env.production.local
+frontend/.npm/
+frontend/.yarn/
+frontend/build/
+frontend/dist/
+frontend/coverage/
+frontend/.DS_Store
+frontend/.vercel/
+frontend/.turbo/
+

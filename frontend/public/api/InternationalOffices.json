@@ -1,0 +1,129 @@
+[
+    {
+        "id": 1,
+        "country": "Ghana",
+        "flag": "https://www.technoxian.com/images/flag/ghana.jpg",
+        "company": "Ghana Corp. Office",
+        "email": "devendra@technoxian.in"
+    },
+    {
+        "id": 2,
+        "country": "Bangladesh",
+        "flag": "https://www.technoxian.com/images/flag/bangladesh.jpg",
+        "company": "Bangladesh Corp. Office",
+        "email": "redwan@frontech.global"
+    },
+     {
+        "id": 3,
+        "country": "Nigeria",
+        "flag": "https://www.technoxian.com/images/flag/nigeria.jpg",
+        "company": "Nigeria Corp. Office",
+        "email": "TBD"
+    },
+     {
+        "id": 4,
+        "country": "SriLanka",
+        "flag": "https://www.technoxian.com/images/flag/srilanka.jpg",
+        "company": "SriLanka Corp. Office",
+        "email": "ashan@technoxian.com"
+    },
+    {
+        "id": 5,
+        "country": "Russia",
+        "flag": "https://www.technoxian.com/images/flag/Russia.jpg",
+        "company": "Russia Corp. Office",
+        "email": "maxim@future-engineers.ru"
+    },
+    {
+        "id": 6,
+        "country": "Montenegro",
+        "flag": "https://www.technoxian.com/images/flag/Montenegro.jpg",
+        "company": "Montenegro Corp. Office",
+        "email": "montenegrobotics@gmail.com"
+    },
+     {
+        "id": 7,
+        "country": "Azerbaijan",
+        "flag": "https://www.technoxian.com/images/flag/Azerbaizan.jpg",
+        "company": "Azerbaijan Corp. Office",
+        "email": "info@robot.org.az"
+    },
+    {
+        "id": 8,
+        "country": "Iran",
+        "flag": "https://www.technoxian.com/images/flag/iranflag.png",
+        "company": "Iran Corp. Office",
+        "email": "robotexiran@yahoo.com"
+    },
+    {
+        "id": 9,
+        "country": "Venezuala",
+        "flag": "https://www.technoxian.com/images/flag/Venezuala.png",
+        "company": "Venezuala Corp. Office",
+        "email": "fundacionaahe@gmail.com"
+    },
+     {
+        "id": 10,
+        "country": "Zimbabwe",
+        "flag": "https://www.technoxian.com/images/flag/Zimbabwe.png",
+        "company": "Zimbabwe Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 11,
+        "country": "S.Africa",
+        "flag": "https://www.technoxian.com/images/flag/S.Africa.png",
+        "company": "S.Africa Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 12,
+        "country": "Mozambique",
+        "flag": "https://www.technoxian.com/images/flag/Mozambique.png",
+        "company": "Mozambique Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 13,
+        "country": "Zambia",
+        "flag": "https://www.technoxian.com/images/flag/Zambia.png",
+        "company": "Zambia Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 14,
+        "country": "Botswana",
+        "flag": "https://www.technoxian.com/images/flag/Botswana.png",
+        "company": "Botswana Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 15,
+        "country": "Mamibia",
+        "flag": "https://www.technoxian.com/images/flag/Namibia.png",
+        "company": "Namibia Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+     {
+        "id": 16,
+        "country": "Peuto Rico",
+        "flag": "https://www.technoxian.com/images/flag/Peuto%20Rico.png",
+        "company": "Peuto Rico Corp. Office",
+        "email": "cathykanye.86@gmail.com"
+    },
+    {
+        "id": 17,
+        "country": "Egypt",
+        "flag": "https://www.technoxian.com/images/flag/Egypt.png",
+        "company": "Egypt Corp. Office",
+        "email": "info.eg@technoxian.com"
+    },
+     {
+        "id": 18,
+        "country": "Iraq",
+        "flag": "https://www.technoxian.com/images/flag/flag-of-Iraq.jpg",
+        "company": "Iraq Corp. Office",
+        "email": "wael.abbas@technoxian.com"
+    }
+    
+]
