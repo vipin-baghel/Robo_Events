@@ -14,7 +14,13 @@ class ChampionshipSerializer(serializers.ModelSerializer):
         model = Championship
         fields = '__all__'
 
-class EventSerializer(serializers.ModelSerializer):
+class EventListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'name', 'championship']
+        depth = 1  # Include nested championship data
+
+class EventDetailSerializer(serializers.ModelSerializer):
     championship_id = serializers.PrimaryKeyRelatedField(source='championship', read_only=True)
 
     class Meta:

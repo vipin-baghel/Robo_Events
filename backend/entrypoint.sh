@@ -14,6 +14,9 @@ done
 
 echo "Database is ready!"
 
+# make migrations
+python manage.py makemigrations
+
 # Apply database migrations
 echo "Applying database migrations..."
 python manage.py migrate --noinput || {

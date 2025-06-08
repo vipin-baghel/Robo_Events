@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics, response, status
 from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration
 from .serializers import (
-    ChampionshipSerializer, EventSerializer, NewsUpdateSerializer,
+    ChampionshipSerializer, EventListSerializer, EventDetailSerializer, NewsUpdateSerializer,
     TeamSerializer, TeamRankSerializer, SiteConfigurationSerializer,
     TeamRegistrationSerializer, EventRegistrationSerializer
 )
@@ -15,7 +15,16 @@ class ChampionshipViewSet(viewsets.ReadOnlyModelViewSet):
 
 class EventViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return EventListSerializer
+        return EventDetailSerializer
+    
+    def get_queryset(self):
+        if self.action == 'list':
+            return self.queryset.only('id', 'name', 'championship')
+        return self.queryset
 
 class NewsUpdateViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = NewsUpdate.objects.all()

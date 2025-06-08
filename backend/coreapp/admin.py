@@ -27,10 +27,22 @@ class ChampionshipAdmin(ImportExportModelAdmin):
 @admin.register(Event)
 class EventAdmin(ImportExportModelAdmin):
     resource_class = EventResource
-    list_display = ("name", "championship", "slug", "display_in_navigation")
-    search_fields = ("name", "slug")
-    list_filter = ("championship", "display_in_navigation")
+    list_display = ("name", "championship", "start_date", "end_date", "location", "organized_by", "display_in_navigation")
+    search_fields = ("name", "slug", "location", "organized_by", "sponsored_by")
+    list_filter = ("championship", "display_in_navigation", "start_date")
     prepopulated_fields = {"slug": ("name",)}
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'championship', 'short_description', 'display_in_navigation')
+        }),
+        ('Event Details', {
+            'fields': ('start_date', 'end_date', 'location')
+        }),
+        ('Additional Information', {
+            'classes': ('collapse',),
+            'fields': ('rules_and_eligibility', 'organized_by', 'sponsored_by'),
+        }),
+    )
 
 @admin.register(NewsUpdate)
 class NewsUpdateAdmin(ImportExportModelAdmin):

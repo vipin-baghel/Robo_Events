@@ -62,8 +62,12 @@ class Event(models.Model):
         help_text="URL-friendly version of the event name (auto-generated if possible)."
     )
     short_description = models.TextField(blank=True, help_text="A brief overview for listings.")
-    # Add more detailed fields if an event details page is planned in the future
-    # e.g., rules, detailed_description, schedule, header_image, etc.
+    start_date = models.DateField(help_text="Start date of the event", null=True, blank=True)
+    end_date = models.DateField(help_text="End date of the event", null=True, blank=True)
+    location = models.CharField(max_length=200, blank=True, help_text="Venue or location where the event will take place")
+    rules_and_eligibility = models.TextField(blank=True, help_text="Detailed rules and eligibility criteria for the event")
+    organized_by = models.CharField(max_length=200, blank=True, help_text="Organization or committee organizing the event")
+    sponsored_by = models.CharField(max_length=200, blank=True, help_text="Sponsors of the event")
     display_in_navigation = models.BooleanField(default=True, help_text="Include this event in homepage navigation.")
 
     def __str__(self):

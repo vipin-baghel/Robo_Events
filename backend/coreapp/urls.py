@@ -8,7 +8,8 @@ from .api_views import (
 router = DefaultRouter()
 # RESTful endpoints for frontend
 router.register(r'top-team-ranks', TeamRankViewSet, basename='top-team-ranks')
-router.register(r'events', EventViewSet, basename='events')
+router.register(r'event-details', EventViewSet, basename='event-details')  # For detailed event information
+router.register(r'events', EventViewSet, basename='events')  # For minimal event list
 router.register(r'featured-news', NewsUpdateViewSet, basename='featured-news')
 router.register(r'testimonials', NewsUpdateViewSet, basename='testimonials')  # Placeholder: use correct ViewSet if exists
 router.register(r'competitions', ChampionshipViewSet, basename='competitions')
