@@ -1,21 +1,15 @@
 "use client"
 import { ChevronDown, Download } from 'lucide-react'
 import React from 'react'
-import { useHoverContext } from './HoverProvider'
+import DropdownEvents from './DropdownEvents'
 
 const DesktopNavbar = () => {
-  const {setIsEventsHovered } = useHoverContext();
   return (
     <div className='flex items-center gap-3 justify-between'>
         {/* Home */}
-     <div className='hover:bg-[#212840] px-1 py-8 text-[#7c859a] uppercase text-base tracking-tighter font-semibold '>Home</div>
+    <div className='hover:bg-[#212840] px-1 py-8 text-[#7c859a] uppercase text-base tracking-tighter font-semibold '>Home</div>
      {/* Events */}
-      <div 
-         onMouseEnter={() => setIsEventsHovered(true)}
-         onMouseLeave={() => setIsEventsHovered(false)}
-        className='hover:bg-[#212840] px-1 py-8 text-[#7c859a] uppercase text-base tracking-tighter font-semibold flex items-center gap-0.5 '>Events
-        <ChevronDown className='w-5'/>
-      </div>
+      <DropdownEvents/>
 
       {/* Community */}
        <div className='hover:bg-[#212840] px-1 py-8 text-[#7c859a] uppercase text-base tracking-tighter font-semibold flex items-center gap-0.5 '>Community

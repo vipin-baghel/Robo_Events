@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import Image from 'next/image';
 import { NewsUpdatesProps } from '../types';
 import NewsCard from './NewsCard';
 import { API_NEWS_UPDATES } from '../api';
@@ -47,12 +47,10 @@ const NewsUpdates = () => {
     <>
       <section className='flex flex-col '>
         <div className='flex items-center gap-2 mb-8'>
-          <Image 
+          <img
             src="/assets/NewsUpdates-Icon.jpg" 
-            alt="News updates icon" 
-            width={24} 
-            height={24} 
-            className="object-contain" 
+            alt="News updates icon"  
+            className="object-contain w-20" 
           />
           <h2 className='text-3xl font-semibold text-gray-900'>News Updates</h2>
         </div>

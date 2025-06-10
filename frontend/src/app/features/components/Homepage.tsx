@@ -7,29 +7,14 @@ import TopRanking from "./TopRanking";
 import Trending from "./Trending";
 import { CompanyNameProps } from "../types";
 import BannerVideo from "./BannerVideo";
-import DesktopEventCards from "./DesktopEventCard";
-import { useHoverContext } from "./HoverProvider";
 import PointsTable from "./PointsTable";
 
 const Homepage = ({companyName}: CompanyNameProps ) => {
-  const {isEventsHovered, setIsEventsHovered} = useHoverContext();
   return (
     <div>
-      <div onMouseEnter = {() => setIsEventsHovered(true)}
-           onMouseLeave={() => setIsEventsHovered(false)}
-           className="relative">
-            <div className="absolute z-50 top-0 lg:left-[40%] 2xl:left-1/2">
-            {isEventsHovered && (
-              <DesktopEventCards/>
-            )}
-            </div>
-      </div>
+      
       <BannerVideo />
-      {/* Certificates */}
-      {/* <div className="flex flex-col lg:flex-row gap-8 px-4 lg:px-20 mb-12">
-        <WRC companyName={companyName} />
-        <Certificate />
-      </div> */}
+      
       {/* News Updates */}
       <div className="px-4 lg:px-24 mb-20 pt-12">
         <NewsUpdates />

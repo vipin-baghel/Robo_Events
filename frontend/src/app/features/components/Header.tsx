@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react'
-import TopHeader from './TopHeader'
 import DesktopNavbar from './DesktopNavbar'
 import { Menu, X } from 'lucide-react'
 import MobileNav from './MobileNav'
+import CountdownBanner from './CountdownBanner'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <TopHeader />
+      <CountdownBanner />
       <header className='bg-white p-4  lg:px-24 shadow-md'>
         
         <div className='max-x-7xl flex items-center justify-between h-16'>
