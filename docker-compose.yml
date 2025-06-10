@@ -64,7 +64,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     env_file:
-      - ./frontend/.env.local
+      - ./frontend/.env
     expose:
       - 3000
     depends_on:

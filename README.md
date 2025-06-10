@@ -96,57 +96,35 @@ Create a `.env` file in the backend directory with the following variables:
 
 ```env
 # Backend Environment Variables
+# Django settings
+SECRET_KEY=your-very-strong-secret-key
 DEBUG=True
-SECRET_KEY=your-secret-key
-POSTGRES_DB=robo_events_db
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=your-password
-ALLOWED_HOSTS=localhost,127.0.0.1
+ALLOWED_HOSTS=*
+
+# PostgreSQL settings (must match your docker-compose.yml)
+POSTGRES_DB=robodb
+POSTGRES_USER=robouser
+POSTGRES_PASSWORD=POSTGRES123
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+
+# Frontend CORS/CSRF settings
 FRONTEND_ORIGIN=http://localhost:3000
 
+# Superuser settings
+DJANGO_SUPERUSER_USERNAME=admin
+DJANGO_SUPERUSER_EMAIL=admin@example.com
+DJANGO_SUPERUSER_PASSWORD=admin
+```
+Create a `.env` file in the frontend directory with the following variables:
+
+```env
 # Frontend Environment Variables
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
+NEXT_PUBLIC_API_URL=http://localhost/api/
 NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=your-ga-id
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 ```
 
-## Development
-
-### Frontend Development
-
-1. Install dependencies:
-```bash
-cd frontend
-npm install
-```
-
-2. Start development server:
-```bash
-npm run dev
-```
-
-### Backend Development
-
-1. Create and activate virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Run migrations:
-```bash
-python manage.py migrate
-```
-
-4. Start development server:
-```bash
-python manage.py runserver
-```
 
 ## Reverse Proxy Setup
 
