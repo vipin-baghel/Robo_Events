@@ -44,7 +44,11 @@ USER appuser
 
 # Create necessary directories with correct permissions at runtime
 RUN mkdir -p /app/media/banner_videos && \
-    chmod -R 755 /app/media
+    chmod -R 755 /app/media && \
+    chown -R $UID:$GID /app/media && \
+    chown -R $UID:$GID /app/staticfiles && \
+    mkdir -p /app/static && \   
+    chown -R $UID:$GID /app/static
 
 EXPOSE 8000
 

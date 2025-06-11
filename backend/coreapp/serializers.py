@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration
+from .models import ( Championship, Event, NewsUpdate, Team, TeamRank, 
+    SiteConfiguration, TeamMember, EventRegistration, Testimonial
+)
 
 class SiteConfigurationSerializer(serializers.ModelSerializer):
     banner_video = serializers.FileField(use_url=True, required=False)
@@ -17,15 +19,12 @@ class ChampionshipSerializer(serializers.ModelSerializer):
 class EventListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'championship']
-        depth = 1  # Include nested championship data
+        fields = ['id', 'name', 'slug', 'short_description', 'start_date', 'end_date', 'location']
 
 class EventDetailSerializer(serializers.ModelSerializer):
-    championship_id = serializers.PrimaryKeyRelatedField(source='championship', read_only=True)
-
     class Meta:
         model = Event
-        fields = [f.name for f in Event._meta.fields if f.name != 'championship'] + ['championship_id']
+        fields = '__all__'
 
 class NewsUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -98,3 +97,52 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         model = EventRegistration
         fields = ['id', 'team', 'event', 'created_at']
         read_only_fields = ['created_at']
+
+
+class TestimonialSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Testimonial model.
+    """
+    event = serializers.PrimaryKeyRelatedField(
+        queryset=Event.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    event_name = serializers.CharField(source='event.name', read_only=True)
+    rating_display = serializers.CharField(source='get_rating_display', read_only=True)
+
+    class Meta:
+        model = Testimonial
+        fields = [
+            'id', 'name', 'role', 'event', 'event_name', 'content', 'rating',
+            'rating_display', 'is_approved', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']
+
+    def validate_rating(self, value):
+        """Validate that rating is between 1 and 5."""
+        if not 1 <= value <= 5:
+            raise serializers.ValidationError("Rating must be between 1 and 5.")
+        return value
+
+    def create(self, validated_data):
+        """Create a new testimonial."""
+        # By default, new testimonials are not approved
+        validated_data['is_approved'] = False
+        return super().create(validated_data)
+
+
+class PublicTestimonialSerializer(serializers.ModelSerializer):
+    """
+    Simplified serializer for public-facing API that only shows approved testimonials.
+    """
+    event_name = serializers.CharField(source='event.name', read_only=True)
+    rating_display = serializers.CharField(source='get_rating_display', read_only=True)
+
+    class Meta:
+        model = Testimonial
+        fields = [
+            'id', 'name', 'role', 'event_name', 'content',
+            'rating', 'rating_display', 'created_at'
+        ]
+        read_only_fields = fields

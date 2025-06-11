@@ -39,6 +39,17 @@ python manage.py collectstatic --noinput || {
     echo "Warning: Failed to collect static files"
 }
 
+# Check if database is empty and load test data if needed
+echo "Checking if database needs test data..."
+if python manage.py shell -c "from coreapp.models import Championship; exit(0 if Championship.objects.exists() else 1)"; then
+    echo "Database has data, skipping test data loading"
+else
+    echo "Loading test data..."
+    python manage.py load_test_data || {
+        echo "Warning: Failed to load test data"
+    }
+fi
+
 # python manage.py runserver 0.0.0.0:8000
 
 # Start Gunicorn
