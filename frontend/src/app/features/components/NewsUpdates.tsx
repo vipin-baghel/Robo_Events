@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { NewsUpdatesProps } from '../types';
 import NewsCard from './NewsCard';
 import { API_NEWS_UPDATES } from '../api';
+import { Newspaper } from 'lucide-react';
 
 const fetcherNewsUpdates = async (url: string): Promise<NewsUpdatesProps[]> => {
   const response = await fetch(url);
@@ -47,11 +47,7 @@ const NewsUpdates = () => {
     <>
       <section className='flex flex-col '>
         <div className='flex items-center gap-2 mb-8'>
-          <img
-            src="/assets/NewsUpdates-Icon.jpg" 
-            alt="News updates icon"  
-            className="object-contain w-20" 
-          />
+          <Newspaper/>
           <h2 className='text-3xl font-semibold text-gray-900'>News Updates</h2>
         </div>
         <ul className='grid grid-cols-3 max-sm:grid-cols-1 max-lg:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch'>

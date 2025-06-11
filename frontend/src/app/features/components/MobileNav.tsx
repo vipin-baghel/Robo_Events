@@ -1,10 +1,14 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { ChevronDown, Download } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import DesktopEventCards from './DesktopEventCard'
+import { Dispatch } from 'react'
 
-const MobileNav = () => {
+type MobileNavProps = {
+ setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+const MobileNav = ({setIsOpen}: MobileNavProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const handleVisible = () => {
     setIsVisible(!isVisible);
@@ -22,7 +26,7 @@ const MobileNav = () => {
         </div>
          {isVisible && (
           <div>
-           <DesktopEventCards/>
+           <DesktopEventCards setIsOpen={setIsOpen}/>
         </div>
           )}
         

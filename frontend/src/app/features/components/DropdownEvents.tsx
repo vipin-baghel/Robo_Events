@@ -4,7 +4,6 @@ import useSWR from 'swr';
 import { API_EVENTS } from '../api';
 import { useRouter } from 'next/navigation';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { slugify } from '../utils/slugify';
 
 
 
@@ -31,7 +30,7 @@ const DropdownEvents = () => {
          <DropdownMenuTrigger className="hover:bg-[#212840] px-1 py-8 text-[#7c859a] uppercase text-base tracking-tighter font-semibold focus:outline-none focus:border-none">Events</DropdownMenuTrigger>
         <DropdownMenuContent>
             {events?.map((event) => (
-                <DropdownMenuItem key={event.id} onClick={() => {router.push(`/${slugify(event.name)}`)
+                <DropdownMenuItem key={event.id} onClick={() => {router.push(`/${event.id}`)
                                                                 setOpen(false)}}>
                   {event.name}
                 </DropdownMenuItem>

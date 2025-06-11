@@ -35,7 +35,7 @@ const Header = () => {
         
         {isOpen && (
           <div className='lg:hidden inset-0 bg-white h-[500px]'>
-            <MobileNav/>
+            <MobileNav setIsOpen={setIsOpen}/>
           </div>
         )}
 

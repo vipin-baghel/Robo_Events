@@ -2,9 +2,7 @@
 import React from "react";
 import NewsUpdates from "./NewsUpdates";
 import LotMore from "./LotMore";
-import Featured from "./Featured";
 import TopRanking from "./TopRanking";
-import Trending from "./Trending";
 import { CompanyNameProps } from "../types";
 import BannerVideo from "./BannerVideo";
 import PointsTable from "./PointsTable";
@@ -34,10 +32,10 @@ const Homepage = ({companyName}: CompanyNameProps ) => {
         <TopRanking companyName={companyName} />
       </div>
       {/* Featured News */}
-      <div className="px-4 lg:px-24 py-16 lg:mb-20 flex flex-col lg:flex-row gap-6 justify-between max-md:gap-y-12">
+      {/* <div className="px-4 lg:px-24 py-16 lg:mb-20 flex flex-col lg:flex-row gap-6 justify-between max-md:gap-y-12">
         <Featured/>
         <Trending />
-      </div>
+      </div> */}
     </div>
   );
 };

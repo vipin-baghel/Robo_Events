@@ -2,7 +2,6 @@ import React from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaLinkedinIn } from "react-icons/fa";
 // import PartnerLogo from "./PartnerLogo";
 import HQ from "./HQ";
-import InternationalOffices from "./InternationalOffices";
 import { CompanyNameProps } from "../types";
 
 const Footer = ({companyName}: CompanyNameProps) => {
@@ -12,7 +11,7 @@ const Footer = ({companyName}: CompanyNameProps) => {
       <div className="flex flex-col lg:flex-row justify-between w-full mt-10 lg:mt-16 mb-4">
        <div className="max-md:mb-6">
         <HQ companyName={companyName} />
-        <InternationalOffices companyName={companyName} />
+        {/* <InternationalOffices companyName={companyName} /> */}
       </div>
       <div>
       {/* <ImpLinks companyName={companyName} /> */}

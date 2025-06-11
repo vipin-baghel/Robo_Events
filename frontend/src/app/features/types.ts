@@ -90,13 +90,20 @@ export type ChamionshipProps = {
 export type EventsProps = {
     id: number;
     name: string;
+    slug: string;
     short_description: string;
+    start_date: string;
+    end_date: string;
+    location: string;
+    rules_and_eligibility: string,
+    organized_by: string
+    sponsored_by: string
     display_in_navigation: boolean;
     championship_id: number,
 }
 
-export type EventDetailsProps = {
-    id: number,
-    name: string;
-    championship: ChamionshipProps;
-}
+// export type EventDetailsProps = {
+//     id: number,
+//     name: string;
+//     championship: ChamionshipProps;
+// }
