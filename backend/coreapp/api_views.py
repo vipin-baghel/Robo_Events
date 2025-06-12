@@ -1,9 +1,13 @@
-from rest_framework import viewsets, generics, response, status
-from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration
+from rest_framework import viewsets, generics, response, status, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration, Testimonial, FooterContent
+
 from .serializers import (
     ChampionshipSerializer, EventListSerializer, EventDetailSerializer, NewsUpdateSerializer,
     TeamSerializer, TeamRankSerializer, SiteConfigurationSerializer,
-    TeamRegistrationSerializer, EventRegistrationSerializer
+    TeamRegistrationSerializer, EventRegistrationSerializer, TestimonialSerializer, 
+    PublicTestimonialSerializer, FooterContentSerializer
+
 )
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -23,7 +27,7 @@ class EventViewSet(viewsets.ReadOnlyModelViewSet):
     
     def get_queryset(self):
         if self.action == 'list':
-            return self.queryset.only('id', 'name', 'championship')
+            return self.queryset.only('id', 'name')
         return self.queryset
 
 class NewsUpdateViewSet(viewsets.ReadOnlyModelViewSet):
@@ -76,19 +80,70 @@ class EventRegistrationAPIView(APIView):
             return response.Response(EventRegistrationSerializer(registration).data, status=status.HTTP_201_CREATED)
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class HomepageAPIView(generics.GenericAPIView):
-    def get(self, request):
-        # Fetch homepage data (customize as needed)
-        site_config = SiteConfiguration.objects.first()
-        championships = Championship.objects.filter(is_active=True)
-        events = Event.objects.filter(display_in_navigation=True)
-        news = NewsUpdate.objects.filter(is_published=True).order_by('-news_date')[:5]
-        top_ranks = TeamRank.objects.order_by('rank', '-points_earned')[:10]
+class TestimonialViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for managing testimonials.
+    """
+    queryset = Testimonial.objects.all()
+    serializer_class = TestimonialSerializer
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filterset_fields = ['event', 'is_approved', 'rating']
+    search_fields = ['name', 'role', 'content']
+    ordering_fields = ['created_at', 'rating']
+    ordering = ['-created_at']
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-        return response.Response({
-            'site_configuration': SiteConfigurationSerializer(site_config).data if site_config else None,
-            'active_championships': ChampionshipSerializer(championships, many=True).data,
-            'events': EventSerializer(events, many=True).data,
-            'latest_news': NewsUpdateSerializer(news, many=True).data,
-            'top_team_ranks': TeamRankSerializer(top_ranks, many=True).data,
-        })
+    def get_queryset(self):
+        """
+        This view should return a list of all testimonials for admins,
+        but only approved ones for unauthenticated users.
+        """
+        queryset = super().get_queryset()
+        if not self.request.user.is_staff:
+            queryset = queryset.filter(is_approved=True)
+        return queryset
+
+    def get_serializer_class(self):
+        """
+        Use different serializers for list/retrieve vs create/update/delete
+        """
+        if self.action in ['list', 'retrieve']:
+            return PublicTestimonialSerializer
+        return TestimonialSerializer
+
+    def perform_create(self, serializer):
+        """
+        Set the created_by field to the current user when creating a testimonial.
+        """
+        if self.request.user.is_authenticated:
+            serializer.save(created_by=self.request.user)
+        else:
+            serializer.save()
+
+
+class FooterViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows footer content to be viewed.
+    """
+    serializer_class = FooterContentSerializer
+    permission_classes = [permissions.AllowAny]  # Publicly accessible
+    
+    def get_queryset(self):
+        """
+        Return the active footer content if available.
+        Returns an empty queryset if no active footer is found.
+        """
+        footer = FooterContent.objects.filter(is_active=True).first()
+        if footer:
+            return FooterContent.objects.filter(id=footer.id)
+        return FooterContent.objects.none()
+    
+    def list(self, request, *args, **kwargs):
+        """
+        Override list to return a single object or empty object.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        if queryset.exists():
+            serializer = self.get_serializer(queryset.first())
+            return response.Response(serializer.data)
+        return response.Response({})

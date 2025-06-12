@@ -1,11 +1,13 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import EmailValidator
 
 class SiteConfiguration(models.Model):
     """
-    Singleton model to store site-wide settings.
+    Singleton model to store site-wide banner video settings.
     """
     banner_video = models.FileField(
         upload_to='banner_videos/',
@@ -15,14 +17,106 @@ class SiteConfiguration(models.Model):
     )
     # Add other global settings here if needed
 
+    class Meta:
+        verbose_name = "Banner Video"
+        verbose_name_plural = "Banner Video"
+
     def __str__(self):
-        return "Site Configuration"
+        return "Banner Video Settings"
 
     # Ensure only one instance of SiteConfiguration can be created
     def save(self, *args, **kwargs):
         if not self.pk and SiteConfiguration.objects.exists():
             raise ValidationError('There can be only one SiteConfiguration instance.')
         return super(SiteConfiguration, self).save(*args, **kwargs)
+
+
+class FooterContent(models.Model):
+    """
+    Model to store footer content and social media links.
+    """
+    address = models.TextField(
+        help_text="Institution's physical address",
+        blank=True,
+        null=True
+    )
+    email = models.EmailField(
+        help_text="Contact email address",
+        validators=[EmailValidator()],
+        blank=True,
+        null=True
+    )
+    phone = models.CharField(
+        max_length=20,
+        help_text="Contact phone number",
+        blank=True,
+        null=True
+    )
+    facebook_url = models.URLField(
+        max_length=200,
+        help_text="Facebook profile/page URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    twitter_url = models.URLField(
+        max_length=200,
+        help_text="Twitter profile URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    instagram_url = models.URLField(
+        max_length=200,
+        help_text="Instagram profile URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    youtube_url = models.URLField(
+        max_length=200,
+        help_text="YouTube channel URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    linkedin_url = models.URLField(
+        max_length=200,
+        help_text="LinkedIn profile/company URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    about_text = models.TextField(
+        help_text="Brief description about the institution for the footer",
+        blank=True,
+        null=True
+    )
+    copyright_text = models.CharField(
+        max_length=255,
+        default="© 2025 Robotics Institution. All rights reserved.",
+        help_text="Copyright text to display in footer"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Enable/disable this footer configuration"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Footer Content"
+        verbose_name_plural = "Footer Content"
+        ordering = ['-is_active', '-created_at']
+
+    def __str__(self):
+        return f"Footer Configuration ({'Active' if self.is_active else 'Inactive'}) - Updated: {self.updated_at.strftime('%Y-%m-%d %H:%M')}"
+
+    def save(self, *args, **kwargs):
+        # Ensure only one active footer configuration exists
+        if self.is_active:
+            FooterContent.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
 
 class Championship(models.Model):
     """
@@ -46,15 +140,8 @@ class Championship(models.Model):
 
 class Event(models.Model):
     """
-    Represents a specific competition or activity within a championship.
+    Represents a specific competition or activity.
     """
-    championship = models.ForeignKey(
-        Championship,
-        related_name='events',
-        on_delete=models.SET_NULL, # Keep events even if championship is deleted, or use CASCADE
-        null=True,
-        blank=True
-    )
     name = models.CharField(max_length=100, unique=True, help_text="e.g., Robo Race, Line Follower, Robo Soccer")
     slug = models.SlugField(
         max_length=120,
@@ -69,6 +156,11 @@ class Event(models.Model):
     organized_by = models.CharField(max_length=200, blank=True, help_text="Organization or committee organizing the event")
     sponsored_by = models.CharField(max_length=200, blank=True, help_text="Sponsors of the event")
     display_in_navigation = models.BooleanField(default=True, help_text="Include this event in homepage navigation.")
+    image_url = models.URLField(
+        blank=True,
+        null=True,
+        help_text="URL of the image to display for this event"
+    )
 
     def __str__(self):
         return self.name
@@ -162,3 +254,46 @@ class EventRegistration(models.Model):
 
     def __str__(self):
         return f"{self.team.name} registered for {self.event.name}"
+
+
+class Testimonial(models.Model):
+    """
+    Stores testimonials from participants, judges, or other stakeholders.
+    """
+    class Rating(models.IntegerChoices):
+        ONE = 1, _('★☆☆☆☆')
+        TWO = 2, _('★★☆☆☆')
+        THREE = 3, _('★★★☆☆')
+        FOUR = 4, _('★★★★☆')
+        FIVE = 5, _('★★★★★')
+
+    name = models.CharField(max_length=100, help_text="Name of the person giving the testimonial")
+    role = models.CharField(max_length=100, help_text="Role/Position of the person (e.g., Team Captain, Judge, Participant)")
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='testimonials',
+        help_text="Optional: Link to a specific event this testimonial is about"
+    )
+    content = models.TextField(help_text="The testimonial content")
+    rating = models.PositiveSmallIntegerField(
+        choices=Rating.choices,
+        default=Rating.FIVE,
+        help_text="Rating out of 5 stars"
+    )
+    is_approved = models.BooleanField(
+        default=False,
+        help_text="Set to True to display this testimonial publicly"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Testimonial'
+        verbose_name_plural = 'Testimonials'
+
+    def __str__(self):
+        return f"Testimonial from {self.name} ({self.get_rating_display()})"
