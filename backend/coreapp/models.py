@@ -1,8 +1,9 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import EmailValidator
 
 class SiteConfiguration(models.Model):
     """
@@ -28,6 +29,94 @@ class SiteConfiguration(models.Model):
         if not self.pk and SiteConfiguration.objects.exists():
             raise ValidationError('There can be only one SiteConfiguration instance.')
         return super(SiteConfiguration, self).save(*args, **kwargs)
+
+
+class FooterContent(models.Model):
+    """
+    Model to store footer content and social media links.
+    """
+    address = models.TextField(
+        help_text="Institution's physical address",
+        blank=True,
+        null=True
+    )
+    email = models.EmailField(
+        help_text="Contact email address",
+        validators=[EmailValidator()],
+        blank=True,
+        null=True
+    )
+    phone = models.CharField(
+        max_length=20,
+        help_text="Contact phone number",
+        blank=True,
+        null=True
+    )
+    facebook_url = models.URLField(
+        max_length=200,
+        help_text="Facebook profile/page URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    twitter_url = models.URLField(
+        max_length=200,
+        help_text="Twitter profile URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    instagram_url = models.URLField(
+        max_length=200,
+        help_text="Instagram profile URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    youtube_url = models.URLField(
+        max_length=200,
+        help_text="YouTube channel URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    linkedin_url = models.URLField(
+        max_length=200,
+        help_text="LinkedIn profile/company URL",
+        blank=True,
+        null=True,
+        validators=[URLValidator()]
+    )
+    about_text = models.TextField(
+        help_text="Brief description about the institution for the footer",
+        blank=True,
+        null=True
+    )
+    copyright_text = models.CharField(
+        max_length=255,
+        default="© 2025 Robotics Institution. All rights reserved.",
+        help_text="Copyright text to display in footer"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Enable/disable this footer configuration"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Footer Content"
+        verbose_name_plural = "Footer Content"
+        ordering = ['-is_active', '-created_at']
+
+    def __str__(self):
+        return f"Footer Configuration ({'Active' if self.is_active else 'Inactive'}) - Updated: {self.updated_at.strftime('%Y-%m-%d %H:%M')}"
+
+    def save(self, *args, **kwargs):
+        # Ensure only one active footer configuration exists
+        if self.is_active:
+            FooterContent.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
 
 class Championship(models.Model):
     """

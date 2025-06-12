@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .api_views import (
     TeamRankViewSet, EventViewSet, NewsUpdateViewSet, SiteConfigurationViewSet, 
-    ChampionshipViewSet, TestimonialViewSet
+    ChampionshipViewSet, TestimonialViewSet, FooterViewSet
 )
 
 router = DefaultRouter()
@@ -13,7 +13,8 @@ router.register(r'testimonials', TestimonialViewSet, basename='testimonials')
 router.register(r'competitions', ChampionshipViewSet, basename='competitions')
 router.register(r'banner-video', SiteConfigurationViewSet, basename='banner-video')  # Placeholder
 router.register(r'news-updates', NewsUpdateViewSet, basename='news-updates')
+router.register(r'footer', FooterViewSet, basename='footer')
 
 urlpatterns = [
- path('', include(router.urls)),
+    path('', include(router.urls)),
 ]

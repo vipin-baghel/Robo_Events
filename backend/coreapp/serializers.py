@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import ( Championship, Event, NewsUpdate, Team, TeamRank, 
-    SiteConfiguration, TeamMember, EventRegistration, Testimonial
+    SiteConfiguration, TeamMember, EventRegistration, Testimonial, FooterContent
 )
 
 class SiteConfigurationSerializer(serializers.ModelSerializer):
@@ -19,7 +19,7 @@ class ChampionshipSerializer(serializers.ModelSerializer):
 class EventListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ['id', 'name', 'slug', 'short_description', 'start_date', 'end_date', 'location']
+        fields = ['id', 'name', 'slug',]
 
 class EventDetailSerializer(serializers.ModelSerializer):
     class Meta:
@@ -146,3 +146,26 @@ class PublicTestimonialSerializer(serializers.ModelSerializer):
             'rating', 'rating_display', 'created_at'
         ]
         read_only_fields = fields
+
+
+class FooterContentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for FooterContent model.
+    Only returns non-empty fields in the response.
+    """
+    class Meta:
+        model = FooterContent
+        fields = [
+            'address', 'email', 'phone',
+            'facebook_url', 'twitter_url', 'instagram_url',
+            'youtube_url', 'linkedin_url', 'about_text',
+            'copyright_text', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['created_at', 'updated_at']
+
+    def to_representation(self, instance):
+        """
+        Only include non-empty fields in the response.
+        """
+        representation = super().to_representation(instance)
+        return {k: v for k, v in representation.items() if v}

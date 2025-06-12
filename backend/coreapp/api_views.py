@@ -1,10 +1,13 @@
 from rest_framework import viewsets, generics, response, status, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration, Testimonial
+from .models import Championship, Event, NewsUpdate, Team, TeamRank, SiteConfiguration, TeamMember, EventRegistration, Testimonial, FooterContent
+
 from .serializers import (
     ChampionshipSerializer, EventListSerializer, EventDetailSerializer, NewsUpdateSerializer,
     TeamSerializer, TeamRankSerializer, SiteConfigurationSerializer,
-    TeamRegistrationSerializer, EventRegistrationSerializer, TestimonialSerializer, PublicTestimonialSerializer
+    TeamRegistrationSerializer, EventRegistrationSerializer, TestimonialSerializer, 
+    PublicTestimonialSerializer, FooterContentSerializer
+
 )
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -118,3 +121,29 @@ class TestimonialViewSet(viewsets.ModelViewSet):
             serializer.save()
 
 
+class FooterViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows footer content to be viewed.
+    """
+    serializer_class = FooterContentSerializer
+    permission_classes = [permissions.AllowAny]  # Publicly accessible
+    
+    def get_queryset(self):
+        """
+        Return the active footer content if available.
+        Returns an empty queryset if no active footer is found.
+        """
+        footer = FooterContent.objects.filter(is_active=True).first()
+        if footer:
+            return FooterContent.objects.filter(id=footer.id)
+        return FooterContent.objects.none()
+    
+    def list(self, request, *args, **kwargs):
+        """
+        Override list to return a single object or empty object.
+        """
+        queryset = self.filter_queryset(self.get_queryset())
+        if queryset.exists():
+            serializer = self.get_serializer(queryset.first())
+            return response.Response(serializer.data)
+        return response.Response({})

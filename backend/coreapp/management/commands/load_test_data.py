@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from coreapp.models import (
-    Championship, Event, Testimonial, Team, TeamMember, TeamRank, NewsUpdate, SiteConfiguration
+    Championship, Event, Testimonial, Team, TeamMember, TeamRank, NewsUpdate, SiteConfiguration, FooterContent
 )
 from django.utils import timezone
 import random
@@ -196,4 +196,21 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS('Created superuser: admin / admin'))
         
+        # Create footer content if it doesn't exist
+        if not FooterContent.objects.exists():
+            footer = FooterContent.objects.create(
+                address="123 Robotics Avenue\nTech Park, Electronic City\nBangalore, Karnataka 560100\nIndia",
+                email="contact@roboticsinstitute.edu.in",
+                phone="+91 80 1234 5678",
+                facebook_url="https://facebook.com/roboticsinstitute",
+                twitter_url="https://twitter.com/robotics_inst",
+                instagram_url="https://instagram.com/roboticsinstitute",
+                youtube_url="https://youtube.com/c/roboticsinstitute",
+                linkedin_url="https://linkedin.com/company/robotics-institute",
+                about_text="The Robotics Institute is a premier institution dedicated to advancing robotics education and research. We organize national and international robotics competitions to foster innovation and technical excellence among students and professionals.",
+                copyright_text="© 2025 Robotics Institute. All rights reserved.",
+                is_active=True
+            )
+            self.stdout.write(self.style.SUCCESS('Created sample footer content'))
+
         self.stdout.write(self.style.SUCCESS('Successfully loaded test data!'))
