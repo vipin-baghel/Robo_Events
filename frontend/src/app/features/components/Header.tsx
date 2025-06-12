@@ -5,7 +5,7 @@ import { Menu, X } from 'lucide-react'
 import MobileNav from './MobileNav'
 import CountdownBanner from './CountdownBanner'
 
-const Header = () => {
+const Header = ({onContactClick}: {onContactClick: () => void}) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
@@ -16,14 +16,14 @@ const Header = () => {
           {/* Logo */}
           <div className='flex-shrink-0'>
             <img 
-               src="/assets/Technoxian-Logo.png"
+               src="/assets/Navyugam-header-logo.jpeg"
                alt='logo'
                className='object-contain w-[280px] max-md:w-[200px] max-sm:w-[180px]'
             />
           </div>
 
           <div className='max-lg:hidden'>
-            <DesktopNavbar/>
+            <DesktopNavbar onContactClick={onContactClick}/>
           </div>
 
           <button 
@@ -35,7 +35,9 @@ const Header = () => {
         
         {isOpen && (
           <div className='lg:hidden inset-0 bg-white h-[500px]'>
-            <MobileNav setIsOpen={setIsOpen}/>
+            <MobileNav setIsOpen={setIsOpen} 
+                       onContactClick={onContactClick}
+            />
           </div>
         )}
 

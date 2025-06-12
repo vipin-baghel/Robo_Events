@@ -4,8 +4,10 @@ import { API_EVENTS } from "@/app/features/api";
 import { EventsProps } from "@/app/features/types";
 import { formatDateRange } from "@/app/features/utils/format-date-range";
 import { Download } from "lucide-react";
-import { notFound, useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
+import { useEffect } from "react";
 import useSWR from "swr";
+import { NotFound } from "../not-found/not-found";
 // import useSWR from "swr";
 
 const fetcherEventDetails = async(url: string): Promise<EventsProps> => {
@@ -18,12 +20,22 @@ const fetcherEventDetails = async(url: string): Promise<EventsProps> => {
 const EventPage = () => {
    
     const {id} = useParams();
+    const router = useRouter();
+    
+    useEffect(() => {
+        const handlePopState = () => {
+            router.replace(`/`);
+        };
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
+    },[router]);
+
     const {data: eventData, error, isLoading} = useSWR<EventsProps>(`${API_EVENTS}/${id}`, fetcherEventDetails);
     console.log(eventData);
     if(isLoading) return <p className="animate-spin text-blue-900"></p>;
     if (error) console.log("Failed to load event details: ", error);
 
-    if (!eventData) return notFound();
+    if (!eventData) return <NotFound />
     // const eventData = events?.find(e => slugify(e.name) === slug);
 
     // if(!eventData) console.log("Event details not found");
@@ -44,7 +56,12 @@ const EventPage = () => {
             {/* Eligibility */}
             <div className="mb-8">
                 <h3 className="text-[1.85rem] text-gray-900 font-bold mb-2">Eligibility Criteria</h3>
-                <p className="text-base">{eventData?.rules_and_eligibility}</p>
+                <div className="text-base space-y-2">
+                    {eventData?.rules_and_eligibility
+                      .split(/\r?\n/)
+                      .map((line, index) => (
+                        <p key={index}>{line}</p>
+                      ))}</div>
             </div>
 
             <button className="py-2 px-6 bg-[#b70000] font-bold text-white text-base rounded-sm flex gap-1 items-center justify-center uppercase tracking-tighter">

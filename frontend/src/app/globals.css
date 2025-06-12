@@ -153,4 +153,21 @@
   }
 }
 
+/* Utility class for 404 state */
+body.showing-404 {
+  overflow: hidden !important;
+}
+
+body.showing-404 header,
+body.showing-404 footer {
+  display: none !important;
+}
+
+/* Ensure countdown banner is hidden */
+body.showing-404 [class*="countdown"],
+body.showing-404 [class*="banner"],
+body.showing-404 [class*="CountdownBanner"] {
+  display: none !important;
+}
+
 

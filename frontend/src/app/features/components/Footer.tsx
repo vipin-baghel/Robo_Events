@@ -1,17 +1,18 @@
+/* eslint-disable react/display-name */
 import React from "react";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube, FaLinkedinIn } from "react-icons/fa";
-// import PartnerLogo from "./PartnerLogo";
 import HQ from "./HQ";
 import { CompanyNameProps } from "../types";
 
-const Footer = ({companyName}: CompanyNameProps) => {
+const Footer = React.forwardRef<HTMLDivElement, CompanyNameProps>(({companyName}, ref) => {
   return (
-    <div className="bg-[#131727] px-4 lg:px-24 py-6 divide-y divide-stone-800 mb-4 overflow-x-hidden">
+    <div ref={ref}
+       className="bg-[#131727] px-4 lg:px-24 py-6 divide-y divide-stone-800 mb-4 overflow-x-hidden">
       {/* <PartnerLogo /> */}
       <div className="flex flex-col lg:flex-row justify-between w-full mt-10 lg:mt-16 mb-4">
        <div className="max-md:mb-6">
         <HQ companyName={companyName} />
-        {/* <InternationalOffices companyName={companyName} /> */}
+      
       </div>
       <div>
       {/* <ImpLinks companyName={companyName} /> */}
@@ -40,6 +41,7 @@ const Footer = ({companyName}: CompanyNameProps) => {
       </div>
     </div>
   );
-};
+}
+);
 
 export default Footer;

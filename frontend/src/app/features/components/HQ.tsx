@@ -8,7 +8,7 @@ const HQ = ({companyName}: CompanyNameProps) => {
     <>
       <section className="mb-4">
         <h2 className="text-xl tracking-wide text-white font-medium mb-3">
-          {companyName} Corp. Office
+          {companyName} Contact Us
         </h2>
         <div className="space-y-2">
           <div className="flex items-center gap-3">

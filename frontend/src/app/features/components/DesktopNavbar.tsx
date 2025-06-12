@@ -3,7 +3,7 @@ import { ChevronDown, Download } from 'lucide-react'
 import React from 'react'
 import DropdownEvents from './DropdownEvents'
 
-const DesktopNavbar = () => {
+const DesktopNavbar = ({onContactClick}: {onContactClick: () => void}) => {
   return (
     <div className='flex items-center gap-3 justify-between'>
         {/* Home */}
@@ -24,9 +24,10 @@ const DesktopNavbar = () => {
         <ChevronDown className='w-5'/>
       </div>
       {/* Button */}
-      <button className='max-xl:hidden w-[150px] p-2 bg-[#b70000] font-bold text-white rounded-sm flex items-enter justify-center gap-0.5 uppercase tracking-tighter'>
+      <button onClick={onContactClick}
+              className='max-xl:hidden w-[150px] p-2 bg-[#b70000] font-bold text-white rounded-sm flex items-enter justify-center gap-0.5 uppercase tracking-tighter'>
         <Download className='w-7' />
-         Certificate
+         Contact Us
       </button>
 
       

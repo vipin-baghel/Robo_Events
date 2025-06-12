@@ -44,7 +44,7 @@ const CountdownBanner = () => {
         isVisible && active && (
           <section className={`max-lg:hidden bg-[#0c1121] flex gap-20 items-center justify-between px-24 py-6 relative transition-transform duration-500 ease-in-out ${!isVisible ? "transform -translate-x-full": ""}`}>
         <img
-          src="/assets/Technoxian-Banner.jpg"
+          src="/assets/Navyugam-logo.jpeg"
           alt="Technoxian-Banner"
           height={90}
           width={90}

@@ -7,8 +7,9 @@ import { Dispatch } from 'react'
 
 type MobileNavProps = {
  setIsOpen: Dispatch<SetStateAction<boolean>>;
+ onContactClick: () => void;
 }
-const MobileNav = ({setIsOpen}: MobileNavProps) => {
+const MobileNav = ({setIsOpen, onContactClick}: MobileNavProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const handleVisible = () => {
     setIsVisible(!isVisible);
@@ -44,11 +45,11 @@ const MobileNav = ({setIsOpen}: MobileNavProps) => {
             More 
             <ChevronDown className='w-5'/>
         </div>
-        <Button
-          className='lg:hidden uppercase w-full h-10 bg-[#b70000] text-base tracking-tighter text-white font-bold rounded-sm flex items-center justify-center gap-2 p-2 py-2 hover:bg-[#b70000] '
+        <Button onClick={onContactClick}
+                className='lg:hidden uppercase w-full h-10 bg-[#b70000] text-base tracking-tighter text-white font-bold rounded-sm flex items-center justify-center gap-2 p-2 py-2 hover:bg-[#b70000] '
           >
             <Download className='w-7' />
-            Certificate
+            Contact Us
           </Button>
       
     </div>
