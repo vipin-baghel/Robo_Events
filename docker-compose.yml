@@ -56,6 +56,14 @@ services:
       - media_data:/app/media
     depends_on:
       - backend
+      - frontend
+    restart: unless-stopped
+    healthcheck: 
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      
     networks:
       - app_network
 
@@ -68,8 +76,9 @@ services:
     expose:
       - 3000
     depends_on:
-      - nginx
-      - backend
+      backend:
+        condition: service_healthy 
+    restart: unless-stopped
     networks:
       - app_network
 
