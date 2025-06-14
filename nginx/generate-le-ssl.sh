@@ -14,11 +14,13 @@ if [ -f "/etc/letsencrypt/live/navyugam.com/fullchain.pem" ]; then
 # Let's Encrypt SSL configuration
 ssl_certificate /etc/letsencrypt/live/navyugam.com/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/navyugam.com/privkey.pem;
-ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;
 
-# Enable OCSP Stapling
+# OCSP Stapling configuration
 ssl_stapling on;
 ssl_stapling_verify on;
+ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
 EOL
 
     # Copy certificates to persistent storage
@@ -48,6 +50,8 @@ ssl_certificate_key /etc/nginx/ssl/selfsigned.key;
 # Disable OCSP Stapling for self-signed
 ssl_stapling off;
 ssl_stapling_verify off;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
 EOL
     
     echo "Self-signed SSL configuration updated"
