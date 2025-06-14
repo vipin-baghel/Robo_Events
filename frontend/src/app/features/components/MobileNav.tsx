@@ -4,6 +4,7 @@ import { ChevronDown, Download } from 'lucide-react'
 import React, { SetStateAction, useState } from 'react'
 import DesktopEventCards from './DesktopEventCard'
 import { Dispatch } from 'react'
+import Link from 'next/link'
 
 type MobileNavProps = {
  setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -16,9 +17,9 @@ const MobileNav = ({setIsOpen, onContactClick}: MobileNavProps) => {
   }
   return (
     <div className='px-2 flex flex-col lg:flex-row gap-y-4'>
-        <div className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter font-semibold'>
+        <Link href="/" className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter font-semibold'>
             HOME
-        </div>
+        </Link>
          <div 
             onClick={handleVisible}
             className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center gap-0.5 font-semibold'>
@@ -35,12 +36,12 @@ const MobileNav = ({setIsOpen, onContactClick}: MobileNavProps) => {
             Community 
             <ChevronDown className='w-5' />
         </div>
-         <div className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center font-semibold'>
+         <Link href="/" className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center font-semibold'>
             Membership
-        </div>
-         <div className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center gap-1 font-semibold'>
+        </Link>
+         <Link href="/" className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center gap-1 font-semibold'>
             Gallery
-        </div>
+        </Link>
           <div className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter flex items-center gap-0.5 font-semibold'>
             More 
             <ChevronDown className='w-5'/>
