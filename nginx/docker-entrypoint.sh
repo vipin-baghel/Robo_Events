@@ -44,6 +44,10 @@ else
   fi
 fi
 
+# Generate SSL configuration
+echo "Generating SSL configuration..."
+/generate-le-ssl.sh
+
 # Start Nginx
 echo "Starting Nginx..."
 exec nginx -g "daemon off;"

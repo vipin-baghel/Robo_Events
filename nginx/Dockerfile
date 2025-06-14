@@ -24,9 +24,10 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 # Copy our custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy the entrypoint script
+# Copy the entrypoint script and SSL generation script
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY generate-le-ssl.sh /generate-le-ssl.sh
+RUN chmod +x /docker-entrypoint.sh /generate-le-ssl.sh
 
 # Set proper permissions
 RUN chown -R nginx:nginx /var/log/nginx /var/cache/nginx/ /var/www/certbot /etc/letsencrypt/ /etc/nginx/ssl/ \
