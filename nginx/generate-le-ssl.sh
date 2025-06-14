@@ -10,18 +10,29 @@ if [ -f "/etc/letsencrypt/live/navyugam.com/fullchain.pem" ]; then
     echo "Using Let's Encrypt certificates"
     
     # Create Let's Encrypt SSL configuration
-    cat > /etc/nginx/ssl/le-ssl.conf << 'EOL'
-# Let's Encrypt SSL configuration
+    if [ -f "/etc/letsencrypt/live/navyugam.com/chain.pem" ]; then
+        # Full configuration with OCSP stapling
+        cat > /etc/nginx/ssl/le-ssl.conf << 'EOL'
+# Let's Encrypt SSL configuration with OCSP stapling
 ssl_certificate /etc/letsencrypt/live/navyugam.com/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/navyugam.com/privkey.pem;
-
-# OCSP Stapling configuration
+ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;
 ssl_stapling on;
 ssl_stapling_verify on;
-ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;
 resolver 8.8.8.8 8.8.4.4 valid=300s;
 resolver_timeout 5s;
 EOL
+    else
+        # Fallback configuration without OCSP stapling
+        echo "Warning: chain.pem not found, disabling OCSP stapling"
+        cat > /etc/nginx/ssl/le-ssl.conf << 'EOL'
+# Let's Encrypt SSL configuration (no OCSP stapling)
+ssl_certificate /etc/letsencrypt/live/navyugam.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/navyugam.com/privkey.pem;
+ssl_stapling off;
+ssl_stapling_verify off;
+EOL
+    fi
 
     # Copy certificates to persistent storage
     cp -f /etc/letsencrypt/live/navyugam.com/fullchain.pem /etc/nginx/ssl/ 2>/dev/null || true
