@@ -59,3 +59,14 @@ frontend/.DS_Store
 frontend/.vercel/
 frontend/.turbo/
 
+
+
+# --- Nginx ---
+# nginx/nginx.conf
+# nginx/docker-entrypoint.sh
+# nginx/Dockerfile
+# nginx/letsencrypt
+# nginx/ssl
+# nginx/letsencrypt
+# nginx/ssl
+

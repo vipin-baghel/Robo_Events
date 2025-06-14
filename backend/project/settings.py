@@ -189,6 +189,7 @@ STATICFILES_DIRS = [
 os.makedirs(STATIC_ROOT, exist_ok=True)
 os.makedirs(MEDIA_ROOT, exist_ok=True)
 
+
 # --- Logging for Production ---
 LOGGING = {
     'version': 1,

@@ -4,6 +4,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Rebuild the source code only when needed
 FROM node:20-alpine as builder
 WORKDIR /app
