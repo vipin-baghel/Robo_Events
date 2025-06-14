@@ -5,22 +5,28 @@ mkdir -p /etc/nginx/ssl/
 
 # Check if Let's Encrypt certificate exists
 if [ -f "/etc/letsencrypt/live/navyugam.com/fullchain.pem" ]; then
-    # Create a configuration file with Let's Encrypt certificates
-    cat > /etc/nginx/ssl/le-ssl.conf << 'EOL'
-# Let's Encrypt SSL configuration
-ssl_certificate /etc/letsencrypt/live/navyugam.com/fullchain.pem;
-ssl_certificate_key /etc/letsencrypt/live/navyugam.com/privkey.pem;
-
-# Enable OCSP Stapling
-ssl_stapling on;
-ssl_stapling_verify on;
-ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;
-EOL
+    # Start creating the SSL configuration
+    echo "# Let's Encrypt SSL configuration" > /etc/nginx/ssl/le-ssl.conf
+    echo "ssl_certificate /etc/letsencrypt/live/navyugam.com/fullchain.pem;" >> /etc/nginx/ssl/le-ssl.conf
+    echo "ssl_certificate_key /etc/letsencrypt/live/navyugam.com/privkey.pem;" >> /etc/nginx/ssl/le-ssl.conf
     
-    # Copy certificates to persistent storage
+    # Only add OCSP stapling if chain.pem exists
+    if [ -f "/etc/letsencrypt/live/navyugam.com/chain.pem" ]; then
+        echo "" >> /etc/nginx/ssl/le-ssl.conf
+        echo "# Enable OCSP Stapling" >> /etc/nginx/ssl/le-ssl.conf
+        echo "ssl_stapling on;" >> /etc/nginx/ssl/le-ssl.conf
+        echo "ssl_stapling_verify on;" >> /etc/nginx/ssl/le-ssl.conf
+        echo "ssl_trusted_certificate /etc/letsencrypt/live/navyugam.com/chain.pem;" >> /etc/nginx/ssl/le-ssl.conf
+    fi
+    
+    # Copy certificates to persistent storage if they exist
     cp /etc/letsencrypt/live/navyugam.com/fullchain.pem /etc/nginx/ssl/
     cp /etc/letsencrypt/live/navyugam.com/privkey.pem /etc/nginx/ssl/
-    cp /etc/letsencrypt/live/navyugam.com/chain.pem /etc/nginx/ssl/
+    
+    # Only copy chain.pem if it exists
+    if [ -f "/etc/letsencrypt/live/navyugam.com/chain.pem" ]; then
+        cp /etc/letsencrypt/live/navyugam.com/chain.pem /etc/nginx/ssl/
+    fi
     
     echo "Let's Encrypt SSL configuration updated"
 else
