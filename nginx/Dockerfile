@@ -13,7 +13,7 @@ RUN mkdir -p /var/log/nginx/app /var/log/nginx/static \
     && mkdir -p /etc/nginx/ssl
 
 # Generate DH parameters for stronger key exchange
-RUN openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+RUN openssl dhparam -dsaparam -out /etc/nginx/ssl/dhparam.pem 2048
 
 # Create a self-signed certificate as fallback
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
