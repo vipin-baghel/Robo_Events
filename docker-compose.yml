@@ -47,7 +47,7 @@ services:
 
   nginx:
     build: 
-      context: ./nginx
+      context: ./nginx_local
       dockerfile: Dockerfile
     ports:
       - "80:80"
