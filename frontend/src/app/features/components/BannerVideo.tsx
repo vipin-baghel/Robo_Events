@@ -11,10 +11,17 @@ const BannerVideo = () => {
       console.log(response)
       const data = await response.json();
       console.log(data);
-      const url = data[0]?.banner_video;
-      console.log("Banner video URL:", url);
-      setVideoUrl(url);
-       if (url && (url.includes("vertical") || url.includes("portrait"))) {
+      const relativePath = data[0]?.banner_video;
+
+        // Prepend the base URL to the relative path
+      // Using NEXT_PUBLIC_API_BASE_URL as the base for media files
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+      const fullUrl = `${baseUrl}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
+      
+
+      console.log("Banner video URL:", fullUrl);
+      setVideoUrl(fullUrl);
+       if (fullUrl && (fullUrl.includes("vertical") || fullUrl.includes("portrait"))) {
         setIsVertical(true);
       }
     } catch (error) {
