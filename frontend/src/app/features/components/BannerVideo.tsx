@@ -14,8 +14,8 @@ const BannerVideo = () => {
       const relativePath = data[0]?.banner_video;
 
         // Prepend the base URL to the relative path
-      // Using NEXT_PUBLIC_API_BASE_URL as the base for media files
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+      // Using NEXT_PUBLIC_MEDIA_BASE_URL as the base for media files
+      const baseUrl = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '';
       const fullUrl = `${baseUrl}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
       
 

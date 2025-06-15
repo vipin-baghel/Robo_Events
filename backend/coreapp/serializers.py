@@ -13,7 +13,7 @@ class SiteConfigurationSerializer(serializers.ModelSerializer):
         
     def get_banner_video(self, obj):
         if obj.banner_video:
-            return '/media/' + obj.banner_video.name  # Returns the relative path from MEDIA_ROOT
+            return obj.banner_video.name  
         return None
 
 class ChampionshipSerializer(serializers.ModelSerializer):
