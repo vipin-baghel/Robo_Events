@@ -1,153 +1,148 @@
 #!/bin/sh
-set -e
+set -euo pipefail
 
-echo "Starting Nginx with SSL configuration..."
+# Configuration
+DOMAIN="navyugam.com"
+EMAIL="bhanupratapsingh9188@gmail.com"
+CERT_DIR="/etc/letsencrypt/live/${DOMAIN}"
+WEBROOT="/var/www/certbot"
 
-# Function to check if certbot is installed
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Logging functions
+log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
+log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# Check if certbot is installed
 certbot_installed() {
-    command -v certbot > /dev/null 2>&1
+    command -v certbot >/dev/null 2>&1 || {
+        log_error "Certbot not found. Please install certbot."
+        exit 1
+    }
 }
 
-# Function to validate certificate
+# Validate Let's Encrypt certificate
 validate_certificate() {
-    local cert_file="$1"
+    local cert_file="${CERT_DIR}/fullchain.pem"
+    
     if [ ! -f "$cert_file" ]; then
-        echo "Certificate file not found: $cert_file"
+        log_error "Let's Encrypt certificate not found: $cert_file"
         return 1
-    fi
+    }
     
-    # Check if certificate is valid and not expired
     if ! openssl x509 -checkend 86400 -noout -in "$cert_file" 2>/dev/null; then
-        echo "Certificate is expired or will expire within 24 hours: $cert_file"
+        log_warn "Let's Encrypt certificate is expired or will expire within 24 hours"
         return 1
-    fi
+    }
     
-    echo "Certificate is valid: $cert_file"
+    log_info "Let's Encrypt certificate is valid: $(openssl x509 -in "$cert_file" -noout -subject)"
     return 0
 }
 
-# Function to request certificates
+# Request new Let's Encrypt certificates
 request_certificates() {
-    echo "Requesting Let's Encrypt certificates..."
+    log_info "Requesting new Let's Encrypt certificates..."
     
     # Stop any running nginx
-    if pgrep "nginx" > /dev/null; then
+    if pgrep -x "nginx" >/dev/null; then
         nginx -s stop
         sleep 2
     fi
     
     # Create necessary directories
-    mkdir -p /var/www/certbot
+    mkdir -p "${WEBROOT}" "${CERT_DIR%/*}"
     
     # Start temporary nginx for HTTP-01 challenge
-    echo "Starting temporary nginx for HTTP-01 challenge..."
+    log_info "Starting temporary nginx for HTTP-01 challenge..."
     nginx -c /etc/nginx/nginx.conf
     
     # Request certificates
-    echo "Running certbot to obtain certificates..."
-    if certbot certonly --webroot -w /var/www/certbot \
-        --email bhanupratapsingh9188@gmail.com \
+    log_info "Running certbot to obtain certificates..."
+    if certbot certonly --webroot -w "${WEBROOT}" \
+        --email "${EMAIL}" \
         --agree-tos \
         --no-eff-email \
         --non-interactive \
         --keep-until-expiring \
         --preferred-challenges http \
-        -d navyugam.com \
-        -d www.navyugam.com; then
-        echo "Certificates obtained successfully!"
-        # Stop temporary nginx
+        -d "${DOMAIN}" \
+        -d "www.${DOMAIN}"; then
+        log_info "Let's Encrypt certificates obtained successfully!"
         nginx -s stop
         return 0
     else
-        echo "Failed to obtain certificates. Will use self-signed certificates."
+        log_error "Failed to obtain Let's Encrypt certificates. Please check your DNS and try again."
         nginx -s stop
-        return 1
+        exit 1
     fi
 }
 
-# Function to renew certificates
+# Renew existing Let's Encrypt certificates
 renew_certificates() {
-    echo "Checking for certificate renewal..."
+    log_info "Checking for Let's Encrypt certificate renewal..."
     if certbot renew --quiet --no-self-upgrade --non-interactive; then
-        echo "Certificates renewed successfully"
+        log_info "Let's Encrypt certificates renewed successfully"
         return 0
     else
-        echo "Certificate renewal failed"
+        log_error "Let's Encrypt certificate renewal failed"
         return 1
     fi
 }
 
-# Function to start nginx with SSL configuration
+# Test and start nginx
 start_nginx() {
-    echo "Generating SSL configuration..."
-    /generate-le-ssl.sh
-    
-    # Test nginx configuration
-    echo "Testing nginx configuration..."
-    if ! nginx -t; then
-        echo "ERROR: Invalid nginx configuration. Exiting."
+    log_info "Testing nginx configuration..."
+    if ! nginx -t >/dev/null 2>&1; then
+        log_error "Invalid nginx configuration"
+        nginx -t  # Show actual error
         exit 1
     fi
     
-    echo "Starting Nginx with SSL configuration..."
-    exec nginx -g 'daemon off;'
+    log_info "Starting Nginx with Let's Encrypt SSL..."
+    exec nginx -g 'daemon off; error_log /dev/stderr info;'
 }
 
 # Main execution
-if [ "$1" = "nginx" ]; then
-    # Create necessary directories
-    mkdir -p /etc/letsencrypt/live/navyugam.com \
-             /etc/nginx/ssl \
-             /var/www/certbot \
-             /var/log/nginx
+main() {
+    if [ "$1" != "nginx" ]; then
+        exec "$@"
+    fi
+    
+    # Ensure required directories exist
+    mkdir -p "${CERT_DIR}" "/etc/nginx/ssl" "${WEBROOT}" "/var/log/nginx"
     
     # Set proper permissions
-    chown -R nginx:nginx /etc/letsencrypt /var/www/certbot /etc/nginx/ssl /var/log/nginx
-    chmod -R 755 /etc/letsencrypt /var/www/certbot /etc/nginx/ssl /var/log/nginx
+    chown -R nginx:nginx "/etc/letsencrypt" "${WEBROOT}" "/etc/nginx/ssl" "/var/log/nginx"
+    chmod -R 755 "/etc/letsencrypt" "${WEBROOT}" "/etc/nginx/ssl" "/var/log/nginx"
     
-    # Check if we have valid certificates
-    if [ -f "/etc/letsencrypt/live/navyugam.com/fullchain.pem" ]; then
-        echo "Existing Let's Encrypt certificates found."
+    # Ensure certbot is installed
+    certbot_installed
+    
+    # Certificate management
+    if [ -f "${CERT_DIR}/fullchain.pem" ]; then
+        log_info "Existing Let's Encrypt certificates found"
         
-        # Validate certificates
-        if validate_certificate "/etc/letsencrypt/live/navyugam.com/fullchain.pem"; then
-            # Try to renew if needed
-            if ! renew_certificates; then
-                echo "Certificate renewal failed, using existing certificates"
-            fi
+        if validate_certificate; then
+            renew_certificates || {
+                log_warn "Failed to renew certificates, using existing ones"
+            }
         else
-            echo "Invalid or expired certificates found, requesting new ones..."
-            if ! request_certificates; then
-                echo "Falling back to self-signed certificates"
-            fi
+            log_warn "Invalid or expired certificates found, requesting new ones..."
+            request_certificates
         fi
     else
-        echo "No Let's Encrypt certificates found, requesting new ones..."
-        if ! request_certificates; then
-            echo "Falling back to self-signed certificates"
-        fi
+        log_info "No Let's Encrypt certificates found, requesting new ones..."
+        request_certificates
     fi
     
-    # Start nginx with the final configuration
+    # Start nginx
     start_nginx
-else
-    exec "$@"
-    fi
-fi
+}
 
-# Generate SSL configuration
-echo "Generating SSL configuration..."
-/generate-le-ssl.sh
-
-# Ensure proper permissions
-chown -R nginx:nginx /etc/nginx/ssl
-chmod -R 755 /etc/nginx/ssl
-chmod 640 /etc/nginx/ssl/*.key 2>/dev/null || true
-
-# Start nginx in the foreground
-echo "Starting Nginx..."
-nginx -g 'daemon off;'
-
-# Start Nginx
-echo "Starting Nginx..."
-exec nginx -g "daemon off;"
+# Run main function
+main "$@"
