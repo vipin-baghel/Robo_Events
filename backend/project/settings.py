@@ -37,16 +37,18 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
-SITE_DOMAIN = 'navyugam.com'
+SITE_NAME = os.getenv('SITE_NAME', 'Navyugam')
+SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
 SITE_URL = f'https://{SITE_DOMAIN}'
 SITE_ID = 1
+
 # Update the site domain
 from django.contrib.sites.models import Site
 
 def update_site_domain():
     site = Site.objects.get_or_create(pk=SITE_ID)[0]
     site.domain = SITE_DOMAIN
-    site.name = 'Navyugam'
+    site.name = SITE_NAME
     site.save()
 
 # Call the function to update the site
