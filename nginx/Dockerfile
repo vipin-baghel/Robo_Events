@@ -37,10 +37,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the entrypoint script and SSL generation script
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-COPY generate-le-ssl.sh /generate-le-ssl.sh
 
 # Set proper permissions
-RUN chmod +x /docker-entrypoint.sh /generate-le-ssl.sh \
+RUN chmod +x /docker-entrypoint.sh \
     && chown -R nginx:nginx /var/log/nginx /var/cache/nginx /var/www/certbot /etc/letsencrypt /etc/nginx/ssl \
     && chmod -R 755 /var/log/nginx /var/cache/nginx /var/www/certbot /etc/letsencrypt /etc/nginx/ssl \
     && chmod 640 /etc/nginx/ssl/*.key 2>/dev/null || true
