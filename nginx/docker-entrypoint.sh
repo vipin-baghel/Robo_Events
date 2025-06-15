@@ -33,12 +33,12 @@ validate_certificate() {
     if [ ! -f "$cert_file" ]; then
         log_error "Let's Encrypt certificate not found: $cert_file"
         return 1
-    }
+    fi
     
     if ! openssl x509 -checkend 86400 -noout -in "$cert_file" 2>/dev/null; then
         log_warn "Let's Encrypt certificate is expired or will expire within 24 hours"
         return 1
-    }
+    fi
     
     log_info "Let's Encrypt certificate is valid: $(openssl x509 -in "$cert_file" -noout -subject)"
     return 0
