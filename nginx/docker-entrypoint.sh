@@ -144,5 +144,10 @@ main() {
     start_nginx
 }
 
-# Run main function
-main "$@"
+# Run main function with proper argument handling
+if [ $# -eq 0 ]; then
+    # Default to nginx if no arguments provided
+    main nginx
+else
+    main "$@"
+fi
