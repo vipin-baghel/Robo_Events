@@ -65,12 +65,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # Required for sites framework
+    
+    # Third-party apps
     'django_filters',
     'rest_framework',
     'corsheaders',
-    'coreapp',
     'import_export',
-
+    
+    # Local apps
+    'coreapp',
 ]
 
 REST_FRAMEWORK = {
