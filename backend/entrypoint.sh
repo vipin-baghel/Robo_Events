@@ -33,6 +33,13 @@ else
     echo "Superuser created/verified"
 fi
 
+# Create static and media directories if they don't exist
+mkdir -p /app/staticfiles /app/media
+
+# Change ownership and permissions of static and media directories
+sudo chown -R $USER:$USER /app/staticfiles /app/media
+sudo chmod -R 755 /app/staticfiles /app/media
+
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput || {

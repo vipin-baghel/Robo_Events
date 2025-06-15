@@ -7,9 +7,6 @@ __pycache__/
 *.log
 *.pot
 *.py[cod]
-/media
-/staticfiles
-/static
 .venv/
 ENV/
 .DS_Store

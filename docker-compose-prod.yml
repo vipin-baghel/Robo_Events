@@ -32,8 +32,9 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./staticfiles:/app/staticfiles
-      - ./media:/app/media
+      - ./backend:/app
+      - ./backend/staticfiles:/app/staticfiles
+      - ./backend/media:/app/media
     ports:
       - "8000:8000"
     healthcheck:
@@ -68,6 +69,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    user: "1000:1000"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./staticfiles:/app/staticfiles
