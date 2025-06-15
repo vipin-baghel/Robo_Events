@@ -33,6 +33,10 @@ else
     echo "Superuser created/verified"
 fi
 
+echo "Updating site domain... $SITE_DOMAIN "
+python manage.py shell -c "from django.contrib.sites.models import Site; site = Site.objects.get_current(); site.domain = '$SITE_DOMAIN'; site.name = '$SITE_NAME'; site.save()" || {
+    echo "Warning: Failed to update site domain"
+}
 
 # Collect static files
 echo "Collecting static files..."

@@ -42,21 +42,6 @@ SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
 SITE_URL = f'https://{SITE_DOMAIN}'
 SITE_ID = 1
 
-# Update the site domain
-from django.contrib.sites.models import Site
-
-def update_site_domain():
-    site = Site.objects.get_or_create(pk=SITE_ID)[0]
-    site.domain = SITE_DOMAIN
-    site.name = SITE_NAME
-    site.save()
-
-# Call the function to update the site
-try:
-    update_site_domain()
-except Exception as e:
-    print(f"Warning: Could not update site domain: {e}")
-
 USE_X_FORWARDED_HOST = True
 
 # --- Production Security Settings ---
@@ -75,6 +60,7 @@ SECURE_HSTS_PRELOAD = not DEBUG
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'coreapp.apps.CoreappConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
