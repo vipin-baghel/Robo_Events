@@ -102,8 +102,7 @@ services:
     volumes:
       - certbot_etc:/etc/letsencrypt
       - certbot_www:/var/www/letsencrypt
-    networks:
-      - app_network
+
 
 networks:
   app_network:
