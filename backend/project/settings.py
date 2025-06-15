@@ -39,7 +39,6 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_
 
 SITE_NAME = os.getenv('SITE_NAME', 'Navyugam')
 SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
-SITE_URL = f'https://{SITE_DOMAIN}'
 
 
 USE_X_FORWARDED_HOST = True
@@ -78,6 +77,7 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+SITE_URL = f'https://{SITE_DOMAIN}'
 
 REST_FRAMEWORK = {
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
@@ -106,11 +106,11 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('FRONTEND_ORIGIN', 'http://localhost:3000'),
+    os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000').split(',') ,
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    os.getenv('FRONTEND_ORIGIN', 'http://localhost:3000'),
+    os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000').split(','),
 ]
 
 ROOT_URLCONF = 'project.urls'
