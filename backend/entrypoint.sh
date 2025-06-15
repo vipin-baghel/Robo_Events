@@ -25,15 +25,15 @@ python manage.py migrate --noinput || {
 }
 
 # Create/update site domain
-echo "Updating site domain..."
-python manage.py shell << EOF
-from django.contrib.sites.models import Site
-site, created = Site.objects.get_or_create(pk=1)
-site.domain = '$SITE_DOMAIN'
-site.name = '$SITE_NAME'
-site.save()
-print(f"Site updated: {site.domain}")
-EOF
+# echo "Updating site domain..."
+# python manage.py shell << EOF
+# from django.contrib.sites.models import Site
+# site, created = Site.objects.get_or_create(pk=1)
+# site.domain = '$SITE_DOMAIN'
+# site.name = '$SITE_NAME'
+# site.save()
+# print(f"Site updated: {site.domain}")
+# EOF
 
 # Create superuser if it doesn't exist
 echo "Creating superuser if needed..."
