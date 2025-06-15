@@ -72,8 +72,8 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - static_data:/app/staticfiles
       - media_data:/app/media
-      - certbot_etc:/etc/letsencrypt
-      - certbot_www:/var/www/certbot
+      - certbot_etc:/etc/letsencrypt:ro
+      - certbot_www:/var/www/letsencrypt:ro
     depends_on:
       - backend
       - frontend
@@ -88,14 +88,22 @@ services:
 
 
   certbot:
-    image: certbot/certbot
+    image: nbraun1/certbot
+    container_name: certbot
+    depends_on:
+      - nginx
+    environment:
+      EMAIL: bhanupratapsingh9188@gmail.com
+      DOMAINS: navyugam.com,www.navyugam.com
+      AUTHENTICATOR: webroot
+      WEBROOT_PATH: /var/www/letsencrypt
+      POST_HOOK_CMD: docker kill -s HUP $$(docker ps --filter "name=webserver" | awk '{print $$1}')
+      CRON: "0 0 1 * *"
     volumes:
       - certbot_etc:/etc/letsencrypt
-      - certbot_www:/var/www/certbot
+      - certbot_www:/var/www/letsencrypt
     networks:
       - app_network
-    command: certonly --webroot --webroot-path=/var/www/certbot --force-renewal --email bhanupratapsingh9188@gmail.com -d navyugam.com -d www.navyugam.com --agree-tos
-
 
 networks:
   app_network:
