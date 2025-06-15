@@ -40,7 +40,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_
 SITE_NAME = os.getenv('SITE_NAME', 'Navyugam')
 SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
 SITE_URL = f'https://{SITE_DOMAIN}'
-SITE_ID = 1
+
 
 USE_X_FORWARDED_HOST = True
 
@@ -76,6 +76,8 @@ INSTALLED_APPS = [
     # Local apps
     'coreapp',
 ]
+
+SITE_ID = 1
 
 REST_FRAMEWORK = {
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
