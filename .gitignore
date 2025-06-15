@@ -62,7 +62,7 @@ frontend/.turbo/
 
 
 # --- Nginx ---
-nginx/nginx.conf
-nginx/secure
 nginx/certbot
-nginx/ssl
+nginx/secure
+
+
