@@ -24,6 +24,17 @@ python manage.py migrate --noinput || {
     exit 1
 }
 
+# Create/update site domain
+echo "Updating site domain..."
+python manage.py shell << EOF
+from django.contrib.sites.models import Site
+site, created = Site.objects.get_or_create(pk=1)
+site.domain = '$SITE_DOMAIN'
+site.name = '$SITE_NAME'
+site.save()
+print(f"Site updated: {site.domain}")
+EOF
+
 # Create superuser if it doesn't exist
 echo "Creating superuser if needed..."
 if [ -z "$DJANGO_SUPERUSER_USERNAME" ] || [ -z "$DJANGO_SUPERUSER_EMAIL" ] || [ -z "$DJANGO_SUPERUSER_PASSWORD" ]; then
@@ -32,11 +43,6 @@ else
     python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(username='$DJANGO_SUPERUSER_USERNAME').exists() or User.objects.create_superuser('$DJANGO_SUPERUSER_USERNAME', '$DJANGO_SUPERUSER_EMAIL', '$DJANGO_SUPERUSER_PASSWORD')"
     echo "Superuser created/verified"
 fi
-
-echo "Updating site domain... $SITE_DOMAIN "
-python manage.py shell -c "from django.contrib.sites.models import Site; site = Site.objects.get_current(); site.domain = '$SITE_DOMAIN'; site.name = '$SITE_NAME'; site.save()" || {
-    echo "Warning: Failed to update site domain"
-}
 
 # Collect static files
 echo "Collecting static files..."

@@ -60,7 +60,6 @@ SECURE_HSTS_PRELOAD = not DEBUG
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'coreapp.apps.CoreappConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -72,6 +71,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'coreapp',
     'import_export',
+    'coreapp.apps.CoreappConfig',
 ]
 
 REST_FRAMEWORK = {
