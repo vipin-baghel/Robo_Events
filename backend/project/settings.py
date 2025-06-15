@@ -37,6 +37,26 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
+SITE_DOMAIN = 'navyugam.com'
+SITE_URL = f'https://{SITE_DOMAIN}'
+SITE_ID = 1
+# Update the site domain
+from django.contrib.sites.models import Site
+
+def update_site_domain():
+    site = Site.objects.get_or_create(pk=SITE_ID)[0]
+    site.domain = SITE_DOMAIN
+    site.name = 'Navyugam'
+    site.save()
+
+# Call the function to update the site
+try:
+    update_site_domain()
+except Exception as e:
+    print(f"Warning: Could not update site domain: {e}")
+
+USE_X_FORWARDED_HOST = True
+
 # --- Production Security Settings ---
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = not DEBUG
@@ -46,8 +66,8 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 SECURE_HSTS_PRELOAD = not DEBUG
-SITE_ID = 1
-USE_X_FORWARDED_HOST = True
+
+
 
 # Application definition
 
@@ -67,6 +87,8 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
