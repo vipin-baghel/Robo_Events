@@ -109,8 +109,8 @@ POSTGRES_HOST=db
 POSTGRES_PORT=5432
 
 # Frontend CORS/CSRF settings
-CORS_ALLOWED_ORIGINS=https://localhost.com
-CSRF_TRUSTED_ORIGINS=https://localhost.com
+CORS_ALLOWED_ORIGINS=https://localhost
+CSRF_TRUSTED_ORIGINS=https://localhost
 
 # Superuser settings
 DJANGO_SUPERUSER_USERNAME=admin
