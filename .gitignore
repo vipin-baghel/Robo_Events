@@ -63,5 +63,8 @@ frontend/.turbo/
 
 # --- Nginx ---
 nginx/
+nginx/nginx.conf
+nginx_local/
+nginx_local/nginx.conf
 
 

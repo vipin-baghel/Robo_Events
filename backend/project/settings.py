@@ -40,11 +40,22 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_
 SITE_NAME = os.getenv('SITE_NAME', 'Navyugam')
 SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
 
+# Ensure proper URL generation
 
-USE_X_FORWARDED_HOST = True
+# Set the site domain for URL generation
+
+
+# Set the site ID for the sites framework
+
+
+
 
 # --- Production Security Settings ---
+FORCE_SCRIPT_NAME = ''
+USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SITE_URL = f'https://{SITE_DOMAIN}'
+SITE_ID = 1
 SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
@@ -77,8 +88,6 @@ INSTALLED_APPS = [
     'coreapp',
 ]
 
-SITE_ID = 1
-SITE_URL = f'https://{SITE_DOMAIN}'
 
 REST_FRAMEWORK = {
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
