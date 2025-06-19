@@ -50,6 +50,12 @@ python manage.py collectstatic --noinput || {
     echo "Warning: Failed to collect static files"
 }
 
+# Set proper permissions for static files
+echo "Setting permissions for static files..."
+chmod -R 755 /app/staticfiles/ || {
+    echo "Warning: Failed to set permissions for static files"
+}
+
 # Check if database is empty and load test data if needed
 echo "Checking if database needs test data..."
 if python manage.py shell -c "from coreapp.models import Championship; exit(0 if Championship.objects.exists() else 1)"; then
