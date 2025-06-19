@@ -109,7 +109,8 @@ POSTGRES_HOST=db
 POSTGRES_PORT=5432
 
 # Frontend CORS/CSRF settings
-FRONTEND_ORIGIN=http://localhost:3000
+CORS_ALLOWED_ORIGINS=https://localhost.com
+CSRF_TRUSTED_ORIGINS=https://localhost.com
 
 # Superuser settings
 DJANGO_SUPERUSER_USERNAME=admin
@@ -120,7 +121,8 @@ Create a `.env` file in the frontend directory with the following variables:
 
 ```env
 # Frontend Environment Variables
-NEXT_PUBLIC_API_URL=http://localhost/api/
+NEXT_PUBLIC_API_BASE_URL=http://localhost/api/
+NEXT_PUBLIC_MEDIA_BASE_URL=http://localhost/media/
 NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=your-ga-id
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your-recaptcha-site-key
 ```
