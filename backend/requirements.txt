@@ -9,3 +9,4 @@ sqlparse
 tzdata
 django-import-export
 python-dotenv
+whitenoise
