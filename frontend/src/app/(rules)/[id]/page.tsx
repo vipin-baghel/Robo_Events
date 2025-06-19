@@ -30,7 +30,7 @@ const EventPage = () => {
         return () => window.removeEventListener("popstate", handlePopState);
     },[router]);
 
-    const {data: eventData, error, isLoading} = useSWR<EventsProps>(`${API_EVENTS}/${id}`, fetcherEventDetails);
+    const {data: eventData, error, isLoading} = useSWR<EventsProps>(`${API_EVENTS}${id}`, fetcherEventDetails);
     console.log(eventData);
     if(isLoading) return <p className="animate-spin text-blue-900"></p>;
     if (error) console.log("Failed to load event details: ", error);
