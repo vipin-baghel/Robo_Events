@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.views.generic import RedirectView
+from django.urls import reverse_lazy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,10 +28,10 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),  # DRF login/logout for browsable API
 ]
 
+# In both development and production, let WhiteNoise handle static files
+# Nginx will serve these files directly in production
+urlpatterns += staticfiles_urlpatterns()
+
+# Only serve media through Django in development
 if settings.DEBUG:
-    # Serve static and media files in development
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-else:
-    # In production, let WhiteNoise handle static files
-    urlpatterns += staticfiles_urlpatterns()

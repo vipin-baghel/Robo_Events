@@ -50,12 +50,41 @@ SITE_DOMAIN = os.getenv('SITE_DOMAIN', 'navyugam.com')
 
 
 
-# --- Production Security Settings ---
-FORCE_SCRIPT_NAME = ''
+# --- URL Configuration ---
+# Base URL configuration
 USE_X_FORWARDED_HOST = True
+FORCE_SCRIPT_NAME = ''  # Important: Keep this empty
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SITE_URL = f'https://{SITE_DOMAIN}'
+
+# Site settings
 SITE_ID = 1
+SITE_URL = f'https://{SITE_DOMAIN}'
+
+# Ensure proper URL handling
+PREPEND_WWW = False
+APPEND_SLASH = True
+
+# Security settings for production
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_REDIRECT_EXEMPT = [
+    # Add any paths that should not be redirected to HTTPS
+]
+
+# Session and CSRF settings
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_TRUSTED_ORIGINS = [
+    f'https://{SITE_DOMAIN}',
+    f'https://www.{SITE_DOMAIN}',
+]
+
+# Security headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
 SECURE_SSL_REDIRECT = not DEBUG
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
