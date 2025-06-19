@@ -193,10 +193,19 @@ USE_TZ = True
 
 # Static files configuration
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory where static files will be collected
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Simplified static file serving with WhiteNoise
+# Ensure this is before the staticfiles app
+WHITENOISE_USE_FINDERS = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Add support for serving admin static files
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'admin')
+
+# Additional locations of static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Media files (uploads)
 MEDIA_URL = '/media/'
