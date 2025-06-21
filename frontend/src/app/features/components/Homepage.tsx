@@ -28,7 +28,7 @@ const Homepage = ({companyName}: CompanyNameProps ) => {
       {/* Testimonial */}
       
       {/* Top Ranking */}
-      <div className="px-4 lg:px-24 py-20 pb-0 bg-[url(https://www.technoxian.com/images/h3teambg.jpg)] bg-cover mb-20">
+      <div className="px-4 lg:px-24 py-20 pb-0  mb-20">
         <TopRanking companyName={companyName} />
       </div>
       {/* Featured News */}

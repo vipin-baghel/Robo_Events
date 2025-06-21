@@ -12,4 +12,5 @@ export const API_INTERNATIONAL_OFFICES = `${API_BASE_URL}international-offices/`
 export const API_COMPETITIONS = `${API_BASE_URL}competitions/`;
 export const API_BANNER_VIDEO = `${API_BASE_URL}banner-video/`;
 export const API_NEWS_UPDATES = `${API_BASE_URL}news-updates/`;
+export const API_FOOTER = `${API_BASE_URL}/footer`;
 // Add more endpoints as needed

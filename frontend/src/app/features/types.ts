@@ -91,6 +91,7 @@ export type EventsProps = {
     id: number;
     name: string;
     slug: string;
+    image_url:string;
     short_description: string;
     start_date: string;
     end_date: string;
@@ -100,6 +101,20 @@ export type EventsProps = {
     sponsored_by: string
     display_in_navigation: boolean;
     championship_id: number,
+}
+
+export type FooterProps = {
+    address: string;
+    email: string;
+    phone: string;
+    facebook_url: string;
+    twitter_url: string;
+    instagram_url: string;
+    youtube_url: string;
+    linkedin_url: string;
+    about_text: string;
+    created_at: string;
+    updated_at: string;
 }
 
 // export type EventDetailsProps = {
