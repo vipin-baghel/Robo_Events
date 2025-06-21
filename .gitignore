@@ -60,11 +60,11 @@ frontend/.vercel/
 frontend/.turbo/
 
 
-
-# --- Nginx ---
+# nginx
 nginx/
-nginx/nginx.conf
-nginx_local/
-nginx_local/nginx.conf
+
+# docker compose
+docker-compose.yml
+docker-compose-prod.yml
 
 
