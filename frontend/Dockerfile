@@ -27,7 +27,15 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/public/runtime-env.js ./public/runtime-env.js
+
+# Create public directory and set permissions
+RUN mkdir -p /app/public && \
+    chown -R nextjs:nodejs /app/public /app/.next
+
+# Set environment variables with defaults if not provided
+ENV NEXT_PUBLIC_API_BASE_URL=""
+ENV NEXT_PUBLIC_MEDIA_BASE_URL=""
+
 
 # Copy entrypoint script
 COPY entrypoint.sh /app/entrypoint.sh

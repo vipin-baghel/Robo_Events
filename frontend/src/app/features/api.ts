@@ -1,33 +1,148 @@
-// Centralized API URL constants for the frontend
+// Centralized API URL configuration for the frontend
 
 declare global {
   interface Window {
     _env_?: {
-      API_BASE_URL?: string;
-      MEDIA_BASE_URL?: string;
+      API_BASE_URL: string;
+      MEDIA_BASE_URL: string;
     };
   }
 }
 
-// Use window._env_ for runtime variables, fallback to process.env for build time
-const getRuntimeEnv = (key: 'API_BASE_URL' | 'MEDIA_BASE_URL', defaultValue: string): string => {
-  if (typeof window !== 'undefined' && window._env_?.[key]) {
-    return window._env_[key] as string;
+// Debug function to log environment state
+const logEnvState = (context: string) => {
+  if (typeof window !== 'undefined') {
+    console.log(`[${context}] Environment state:`, {
+      windowEnv: window._env_,
+      location: window.location.href,
+      timestamp: new Date().toISOString()
+    });
   }
-  const value = process.env[`NEXT_PUBLIC_${key}`];
-  return value !== undefined ? value : defaultValue;
 };
 
-export const API_BASE_URL = getRuntimeEnv('API_BASE_URL', 'http://localhost/api/');
-export const MEDIA_BASE_URL = getRuntimeEnv('MEDIA_BASE_URL', 'http://localhost/media/');
+// Function to get API base URL (no fallback)
+const getApiBaseUrl = (): string => {
+  // During SSR, return an empty string - these functions should only be called client-side
+  if (typeof window === 'undefined') {
+    return '';
+  }
 
-export const API_EVENT_RANKS = `${API_BASE_URL}top-team-ranks/`;
-export const API_EVENTS = `${API_BASE_URL}events/`;
-export const API_FEATURED_NEWS = `${API_BASE_URL}featured-news/`;
-export const API_TESTIMONIALS = `${API_BASE_URL}testimonials/`;
-export const API_INTERNATIONAL_OFFICES = `${API_BASE_URL}international-offices/`;
-export const API_COMPETITIONS = `${API_BASE_URL}competitions/`;
-export const API_BANNER_VIDEO = `${API_BASE_URL}banner-video/`;
-export const API_NEWS_UPDATES = `${API_BASE_URL}news-updates/`;
-export const API_FOOTER = `${API_BASE_URL}footer`;
-// Add more endpoints as needed
+  if (!window._env_?.API_BASE_URL) {
+    const error = new Error('API_BASE_URL is not defined in window._env_');
+    console.error('Environment Error:', error);
+    logEnvState('error-getApiBaseUrl');
+    throw error;
+  }
+  
+  return window._env_.API_BASE_URL;
+};
+
+// Function to get media base URL (no fallback)
+const getMediaBaseUrl = (): string => {
+  // During SSR, return an empty string - these functions should only be called client-side
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
+  if (!window._env_?.MEDIA_BASE_URL) {
+    const error = new Error('MEDIA_BASE_URL is not defined in window._env_');
+    console.error('Environment Error:', error);
+    logEnvState('error-getMediaBaseUrl');
+    throw error;
+  }
+  
+  return window._env_.MEDIA_BASE_URL;
+};
+
+// Initialize window._env_ if it doesn't exist
+if (typeof window !== 'undefined') {
+  window._env_ = window._env_ || {
+    API_BASE_URL: undefined as unknown as string,
+    MEDIA_BASE_URL: undefined as unknown as string
+  };
+  
+  // Debug: Log when window._env_ is accessed or modified
+  const originalEnv = { ...window._env_ };
+  Object.defineProperty(window, '_env_', {
+    get() {
+      console.log('window._env_ accessed:', { ...originalEnv });
+      return originalEnv;
+    },
+    set(value) {
+      console.log('window._env_ updated:', value);
+      Object.assign(originalEnv, value);
+      logEnvState('window-env-updated');
+    },
+    configurable: true
+  });
+}
+
+// Helper function to construct API endpoints
+export const getApiEndpoint = (endpoint: string): string => {
+  // During SSR, return a placeholder URL
+  if (typeof window === 'undefined') {
+    return `/_ssr_placeholder_/${endpoint}`;
+  }
+
+  const baseUrl = getApiBaseUrl();
+  if (!baseUrl) {
+    console.error('getApiEndpoint: baseUrl is empty');
+    return '';
+  }
+  
+  // Ensure base URL ends with exactly one slash
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  // Ensure endpoint doesn't start with a slash
+  const normalizedEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+  const url = `${normalizedBase}/${normalizedEndpoint}`;
+  
+  // Debug log
+  console.log(`[getApiEndpoint] Generated URL: ${url}`);
+  return url;
+};
+
+// Export base URLs as functions to ensure they're always fresh
+export const getAPIBaseURL = () => getApiBaseUrl();
+export const getMediaBaseURL = () => getMediaBaseUrl();
+
+// Export API endpoints as functions to ensure they use the latest base URL
+export const getEventsEndpoint = () => getApiEndpoint('events/');
+export const getEventRanksEndpoint = () => getApiEndpoint('top-team-ranks/');
+export const getFeaturedNewsEndpoint = () => getApiEndpoint('featured-news/');
+export const getTestimonialsEndpoint = () => getApiEndpoint('testimonials/');
+export const getInternationalOfficesEndpoint = () => getApiEndpoint('international-offices/');
+export const getCompetitionsEndpoint = () => getApiEndpoint('competitions/');
+export const getBannerVideoEndpoint = () => getApiEndpoint('banner-video/');
+export const getNewsUpdatesEndpoint = () => getApiEndpoint('news-updates/');
+export const getFooterEndpoint = () => getApiEndpoint('footer');
+
+// Log initial environment state
+if (typeof window !== 'undefined') {
+  logEnvState('initial-load');
+  
+  // Log when window._env_ changes (for debugging)
+  const originalEnv = { ...(window._env_ || {}) };
+  Object.defineProperty(window, '_env_', {
+    get() {
+      return originalEnv;
+    },
+    set(value) {
+      console.log('window._env_ updated:', value);
+      Object.assign(originalEnv, value);
+    },
+    configurable: true
+  });
+}
+
+// Legacy exports for backward compatibility
+export const API_BASE_URL = getApiBaseUrl();
+export const MEDIA_BASE_URL = getMediaBaseUrl();
+export const API_EVENTS = getEventsEndpoint();
+export const API_EVENT_RANKS = getEventRanksEndpoint();
+export const API_FEATURED_NEWS = getFeaturedNewsEndpoint();
+export const API_TESTIMONIALS = getTestimonialsEndpoint();
+export const API_INTERNATIONAL_OFFICES = getInternationalOfficesEndpoint();
+export const API_COMPETITIONS = getCompetitionsEndpoint();
+export const API_BANNER_VIDEO = getBannerVideoEndpoint();
+export const API_NEWS_UPDATES = getNewsUpdatesEndpoint();
+export const API_FOOTER = getFooterEndpoint();
