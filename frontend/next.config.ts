@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+
+  env: {
+    // This makes the environment variable available at runtime
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  },
+
   /* config options here */
   images:{
         remotePatterns: [

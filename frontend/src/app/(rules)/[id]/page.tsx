@@ -20,7 +20,8 @@ const fetcherEventDetails = async(url: string): Promise<EventsProps> => {
 
 const EventPage = () => {
    
-    const {id} = useParams();
+    const params = useParams<{ id: string }>();
+    const id = params?.id;
     const router = useRouter();
     
     useEffect(() => {
