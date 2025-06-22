@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { API_BANNER_VIDEO } from '../api';
+import { API_BANNER_VIDEO, getMediaBaseURL } from '../api';
 const BannerVideo = () => {
   const [videoUrl, setVideoUrl] = useState<string| null>(null);
    const [isVertical, setIsVertical] = useState<boolean>(false);
@@ -8,20 +8,36 @@ const BannerVideo = () => {
   const fetchVideo = async () => {
     try {
       const response = await fetch(API_BANNER_VIDEO);
-      console.log(response)
-      const data = await response.json();
-      console.log(data);
-      const relativePath = data[0]?.banner_video;
-
-        // Prepend the base URL to the relative path
-      // Using NEXT_PUBLIC_MEDIA_BASE_URL as the base for media files
-      const baseUrl = process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '';
-      const fullUrl = `${baseUrl}${relativePath.startsWith('/') ? '' : '/'}${relativePath}`;
+      if (!response.ok) {
+        throw new Error(`Failed to fetch banner video data: ${response.status}`);
+      }
       
+      const data = await response.json();
+      const relativePath = data[0]?.banner_video;
+      
+      if (!relativePath) {
+        throw new Error('No banner video path found in the response');
+      }
 
-      console.log("Banner video URL:", fullUrl);
+      // Get the media base URL from our runtime configuration
+      const baseUrl = getMediaBaseURL();
+      console.log('Media base URL from config:', baseUrl);
+      
+      // Ensure the base URL ends with a slash and the relative path doesn't start with one
+      const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+      const normalizedPath = relativePath.startsWith('/') ? relativePath.substring(1) : relativePath;
+      const fullUrl = `${normalizedBaseUrl}${normalizedPath}`;
+      
+      console.log('Constructed banner video URL:', {
+        baseUrl,
+        relativePath,
+        normalizedBaseUrl,
+        normalizedPath,
+        fullUrl
+      });
+      
       setVideoUrl(fullUrl);
-       if (fullUrl && (fullUrl.includes("vertical") || fullUrl.includes("portrait"))) {
+      if (fullUrl && (fullUrl.includes("vertical") || fullUrl.includes("portrait"))) {
         setIsVertical(true);
       }
     } catch (error) {
