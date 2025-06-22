@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { API_EVENTS } from "@/app/features/api";
@@ -42,26 +43,41 @@ const EventPage = () => {
     
     return(
         <div className="p-4 lg:px-24 py-8">
-            <header className="space-y-1 mb-4">
-            <h2 className="text-[2.2rem] text-gray-900 font-bold mb-2">{eventData?.name}</h2>
-            <p className="italic text-md text-gray-600">
-                {eventData && formatDateRange(eventData.start_date, eventData.end_date)};
-            </p>
-            <p className="text-md text-gray-600">{eventData?.location}</p>
-            </header>
-            <div className="mb-4">
-            <p className="text-base">{eventData?.short_description}</p>
+            <div className="flex flex-col lg:flex-row lg:items-center gap-6 mb-8">
+                <div className="lg:w-1/2">
+                  <header className="space-y-1 mb-4">
+                     <h2 className="text-[2.2rem] lg:text-5xl text-gray-900 font-bold mb-3">{eventData?.name}</h2>
+                     <p className="italic text-base text-gray-600">
+                        <strong className="text-lg text-gray-700 font-bold">Date: </strong> {eventData && formatDateRange(eventData.start_date, eventData.end_date)} 
+                     </p>
+                    <p className="text-base text-gray-600">
+                        <strong className="text-lg text-gray-700 font-bold">Venue: </strong>
+                        {eventData?.location}</p>
+                  </header>
+                  <div>
+                   <p className="text-base mb-6">{eventData?.short_description}</p>
+                   <div className="space-y-1">
+                     <p className="text-base text-gray-600"> 
+                        <strong className="text-lg text-gray-700 font-bold">Organized by: </strong>
+                         {eventData.organized_by}
+                    </p>
+                    <p className="text-base text-gray-600"> 
+                        <strong className="text-lg text-gray-700 font-bold">Sponsored by: </strong>
+                         {eventData.sponsored_by}
+                    </p>
+                   </div>
+                  </div>
+                </div>
+                <div>
+                    <img src={eventData?.image_url} alt={eventData?.name} className="w-full lg:w-[500px] object-cover" />
+                </div>
             </div>
 
             {/* Eligibility */}
             <div className="mb-8">
-                <h3 className="text-[1.85rem] text-gray-900 font-bold mb-2">Eligibility Criteria</h3>
+                <h3 className="text-[1.85rem] lg:text-[2rem] text-gray-900 font-bold mb-2">Eligibility Criteria</h3>
                 <div className="text-base space-y-2">
-                    {eventData?.rules_and_eligibility
-                      .split(/\r?\n/)
-                      .map((line, index) => (
-                        <p key={index}>{line}</p>
-                      ))}</div>
+                    {eventData?.rules_and_eligibility}</div>
             </div>
 
             <button className="py-2 px-6 bg-[#b70000] font-bold text-white text-base rounded-sm flex gap-1 items-center justify-center uppercase tracking-tighter">

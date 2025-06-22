@@ -17,7 +17,10 @@ const MobileNav = ({setIsOpen, onContactClick}: MobileNavProps) => {
   }
   return (
     <div className='px-2 flex flex-col lg:flex-row gap-y-4'>
-        <Link href="/" className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter font-semibold'>
+        <Link 
+          href="/" 
+          onClick={() => setIsOpen(false)} 
+          className='hover:bg-[#212840] p-2 text-[#7c859a] hover:text-white border-b border-dotted uppercase text-base tracking-tighter font-semibold'>
             HOME
         </Link>
          <div 
