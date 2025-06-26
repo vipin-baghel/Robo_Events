@@ -17,9 +17,17 @@ class SiteConfigurationSerializer(serializers.ModelSerializer):
         return None
 
 class ChampionshipSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = Championship
-        fields = '__all__'
+        fields = ['id', 'name', 'start_date', 'end_date', 'is_active', 'location', 'image', 'image_url']
+        read_only_fields = ['image_url']
+    
+    def get_image_url(self, obj):
+        if obj.image:
+            return self.context['request'].build_absolute_uri(obj.image.url) if 'request' in self.context else obj.image.url
+        return None
 
 class EventListSerializer(serializers.ModelSerializer):
     class Meta:

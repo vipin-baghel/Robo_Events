@@ -118,6 +118,10 @@ class FooterContent(models.Model):
             FooterContent.objects.filter(is_active=True).exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
 
+def championship_image_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/championships/<id>/<filename>
+    return f'championships/{instance.id}/{filename}'
+
 class Championship(models.Model):
     """
     Represents a major robotics championship or season.
@@ -129,8 +133,13 @@ class Championship(models.Model):
         default=False,
         help_text="Mark as active for the current/upcoming championship."
     )
-    location  = models.CharField(max_length=200, blank=True, help_text="Location of the championship (e.g., University of Technology, Robotics Arena)")
-    # Add other championship-specific details if needed (e.g., theme, location)
+    location = models.CharField(max_length=200, blank=True, help_text="Location of the championship (e.g., University of Technology, Robotics Arena)")
+    image = models.ImageField(
+        upload_to=championship_image_path,
+        null=True,
+        blank=True,
+        help_text="Upload an image for the championship (recommended size: 1200x630px)"
+    )
 
     def __str__(self):
         return f"{self.name} ({self.start_date.year})"

@@ -2,27 +2,38 @@
 set -e
 
 # Load environment variables
+echo "Loading environment variables..."
 set -a
 source /app/.env || echo "Warning: .env file not found"
 set +a
 
 # Wait for the database to be ready
-echo "Waiting for database..."
-until nc -z $POSTGRES_HOST $POSTGRES_PORT; do
+echo "Waiting for database to be ready..."
+counter=0
+until nc -z -v -w30 $POSTGRES_HOST $POSTGRES_PORT; do
+  counter=$((counter+1))
+  if [ $counter -ge 30 ]; then
+    echo "Error: Could not connect to database after 30 seconds"
+    exit 1
+  fi
   sleep 1
 done
 
-echo "Database is ready!"
+echo "✓ Database connection established"
 
-# make migrations
-python manage.py makemigrations
-
-# Apply database migrations
-echo "Applying database migrations..."
-python manage.py migrate --noinput || {
-    echo "Failed to run migrations"
+# Run database migrations
+echo "Checking for database migrations..."
+python manage.py makemigrations --noinput || {
+    echo "❌ Failed to create migrations"
     exit 1
 }
+
+echo "Applying database migrations..."
+python manage.py migrate --noinput || {
+    echo "❌ Failed to apply migrations"
+    exit 1
+}
+echo "✓ Database migrations applied successfully"
 
 # Create/update site domain
 echo "Updating site domain..."

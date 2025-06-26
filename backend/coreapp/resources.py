@@ -1,5 +1,5 @@
 from import_export import resources
-from .models import SiteConfiguration, Championship, Event, NewsUpdate, Team, TeamRank
+from .models import SiteConfiguration, Championship, Event, NewsUpdate, Team, TeamRank, FooterContent
 
 class SiteConfigurationResource(resources.ModelResource):
     class Meta:
@@ -24,3 +24,8 @@ class TeamResource(resources.ModelResource):
 class TeamRankResource(resources.ModelResource):
     class Meta:
         model = TeamRank
+
+
+class FooterContentResource(resources.ModelResource):
+    class Meta:
+        model = FooterContent

@@ -9,6 +9,7 @@ from .resources import (
     NewsUpdateResource,
     TeamResource,
     TeamRankResource,
+    FooterContentResource,
 )
 
 @admin.register(SiteConfiguration)
@@ -26,9 +27,25 @@ class SiteConfigurationAdmin(ImportExportModelAdmin):
 @admin.register(Championship)
 class ChampionshipAdmin(ImportExportModelAdmin):
     resource_class = ChampionshipResource
-    list_display = ("name", "start_date", "end_date", "is_active", "location")
+    list_display = ("name", "start_date", "end_date", "is_active", "location", "image_preview")
     search_fields = ("name", "location")
     list_filter = ("is_active", "start_date")
+    readonly_fields = ("image_preview",)
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'start_date', 'end_date', 'is_active', 'location')
+        }),
+        ('Image', {
+            'fields': ('image', 'image_preview'),
+            'classes': ('collapse', 'wide')
+        }),
+    )
+    
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="max-height: 200px; max-width: 200px;" />', obj.image.url)
+        return "No image"
+    image_preview.short_description = 'Preview'
 
 @admin.register(Event)
 class EventAdmin(ImportExportModelAdmin):
@@ -84,6 +101,21 @@ class TeamRankAdmin(ImportExportModelAdmin):
     search_fields = ("team__name", "championship__name")
     list_filter = ("championship",)
 
+
+@admin.register(FooterContent)
+class FooterContentAdmin(ImportExportModelAdmin):
+    resource_class = FooterContentResource
+    list_display = ('email', 'phone', 'address')
+    search_fields = ('email', 'phone', 'address')
+    list_filter = ('email', 'phone', 'address')
+    
+    def has_add_permission(self, request):
+        # Only allow one instance of FooterContent
+        return not FooterContent.objects.exists()
+    
+    def has_delete_permission(self, request, obj=None):
+        # Prevent deletion of the only instance
+        return False
 
 @admin.register(Testimonial)
 class TestimonialAdmin(ImportExportModelAdmin):
