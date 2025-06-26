@@ -121,14 +121,14 @@ Returns a list of all championships/competitions.
 
 ### Register Team
 
-Register a new team with team members.
+Register a new team with team members. This endpoint creates a new team and associated member records. If an email is provided for a member, the system will create a user account (inactive by default) and send an activation link to the provided email.
 
 **Endpoint:** `POST /api/register-team/`
 
 **Request Body:**
 ```json
 {
-  "name": "Team RoboX",
+  "name": "Robo Warriors",
   "institution": "Tech University",
   "members": [
     {
@@ -136,16 +136,31 @@ Register a new team with team members.
       "email": "john@example.com",
       "role": "Team Leader",
       "phone": "+1234567890"
+    },
+    {
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "Programmer",
+      "phone": "+1987654321"
     }
   ]
 }
 ```
 
+**Fields Description:**
+- `name`: (required) Name of the team (must be unique)
+- `institution`: (optional) School/University/Organization name
+- `members`: (required, array) List of team members (minimum 1 member required)
+  - `name`: (required) Member's full name
+  - `email`: (required) Member's email address (must be valid email format)
+  - `role`: (optional) Member's role in the team (e.g., "Team Leader", "Programmer")
+  - `phone`: (optional) Contact number
+
 **Response (201 Created):**
 ```json
 {
   "id": 1,
-  "name": "Team RoboX",
+  "name": "Robo Warriors",
   "institution": "Tech University",
   "members": [
     {
@@ -154,10 +169,38 @@ Register a new team with team members.
       "email": "john@example.com",
       "role": "Team Leader",
       "phone": "+1234567890"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "Programmer",
+      "phone": "+1987654321"
     }
   ]
 }
 ```
+
+**Error Responses:**
+- `400 Bad Request`: 
+  - If required fields are missing
+  - If team name already exists
+  - If email format is invalid
+  - If members array is empty
+  - If any member is missing required fields
+  ```json
+  {
+    "name": ["team with this name already exists."]
+  }
+  ```
+  
+  ```json
+  {
+    "members": [
+      {"email": ["Enter a valid email address."]}
+    ]
+  }
+  ```
 
 ### Register for Event (🔒)
 
