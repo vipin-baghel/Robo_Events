@@ -21,7 +21,7 @@ class ChampionshipSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Championship
-        fields = ['id', 'name', 'start_date', 'end_date', 'is_active', 'location', 'image', 'image_url']
+        fields = ['id', 'name', 'start_date', 'end_date', 'is_active', 'location', 'image_url']
         read_only_fields = ['image_url']
     
     def get_image_url(self, obj):
