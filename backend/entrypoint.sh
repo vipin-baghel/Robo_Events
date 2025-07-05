@@ -7,6 +7,10 @@ set -a
 source /app/.env || echo "Warning: .env file not found"
 set +a
 
+# Debug: Show loaded environment variables
+echo "DEBUG: POSTGRES_HOST=$POSTGRES_HOST"
+echo "DEBUG: POSTGRES_PORT=$POSTGRES_PORT"
+
 # Wait for the database to be ready
 echo "Waiting for database to be ready..."
 counter=0
@@ -22,15 +26,17 @@ done
 echo "✓ Database connection established"
 
 # Run database migrations
-echo "Checking for database migrations..."
-python manage.py makemigrations --noinput || {
+echo "Making migrations ..."
+python manage.py makemigrations --noinput --traceback || {
     echo "❌ Failed to create migrations"
+    python manage.py showmigrations || true
     exit 1
 }
 
-echo "Applying database migrations..."
-python manage.py migrate --noinput || {
+echo "Applying migrations..."
+python manage.py migrate --noinput --traceback || {
     echo "❌ Failed to apply migrations"
+    python manage.py showmigrations || true
     exit 1
 }
 echo "✓ Database migrations applied successfully"

@@ -28,7 +28,8 @@ class Command(BaseCommand):
             start_date=timezone.now().date() + timedelta(days=30),
             end_date=timezone.now().date() + timedelta(days=60),
             is_active=True,
-            location="Tech Convention Center, Bangalore"
+            location="Tech Convention Center, Bangalore",
+            image=None
         )
         
         # Create detailed events

@@ -14,8 +14,9 @@ router.register(r'competitions', ChampionshipViewSet, basename='competitions')
 router.register(r'banner-video', SiteConfigurationViewSet, basename='banner-video')  # Placeholder
 router.register(r'news-updates', NewsUpdateViewSet, basename='news-updates')
 router.register(r'footer', FooterViewSet, basename='footer')
-router.register(r'register-team', RegisterTeamAPIView, basename='register-team')
 
 urlpatterns = [
     path('', include(router.urls)),
+    # Register the APIView directly
+    path('register-team/', RegisterTeamAPIView.as_view(), name='register-team'),
 ]
