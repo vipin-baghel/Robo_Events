@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { API_BANNER_VIDEO, getMediaBaseURL } from '../api';
+import { API_BANNER_VIDEO, MEDIA_BASE_URL } from '../api';
 const BannerVideo = () => {
   const [videoUrl, setVideoUrl] = useState<string| null>(null);
    const [isVertical, setIsVertical] = useState<boolean>(false);
@@ -20,7 +20,7 @@ const BannerVideo = () => {
       }
 
       // Get the media base URL from our runtime configuration
-      const baseUrl = getMediaBaseURL();
+      const baseUrl = MEDIA_BASE_URL;
       console.log('Media base URL from config:', baseUrl);
       
       // Ensure the base URL ends with a slash and the relative path doesn't start with one

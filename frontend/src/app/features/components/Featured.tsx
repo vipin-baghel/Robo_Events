@@ -1,19 +1,19 @@
 "use client"
 import React from 'react';
-import FeaturedNews from './FeaturedNews';
-import { NewsItemProps } from '../types';
-import useSWR from 'swr';
-import { API_FEATURED_NEWS } from '../api';
+// import FeaturedNews from './FeaturedNews';
+// import { NewsItemProps } from '../types';
+// import useSWR from 'swr';
+// import { API_FEATURED_NEWS } from '../api';
 
-const fetcherFeaturedNews = async (...args: Parameters<typeof fetch>): Promise<NewsItemProps[]> => {
-    const response = await fetch(...args);
-    return response.json();
-};
+// const fetcherFeaturedNews = async (...args: Parameters<typeof fetch>): Promise<NewsItemProps[]> => {
+//     const response = await fetch(...args);
+//     return response.json();
+// };
 
 const Featured = () => {
-    const { data: featuredNews = [], error, isLoading } = useSWR<NewsItemProps[]>(API_FEATURED_NEWS, fetcherFeaturedNews);
-    if (error) return <div>Failed to load featured news</div>;
-    if (isLoading || !featuredNews) return <div>Loading featured news...</div>;
+    // const { data: featuredNews = [], error, isLoading } = useSWR<NewsItemProps[]>(API_FEATURED_NEWS, fetcherFeaturedNews);
+    // if (error) return <div>Failed to load featured news</div>;
+    // if (isLoading || !featuredNews) return <div>Loading featured news...</div>;
 
     return (
         <section className="flex items-center justify-between xl:w-[60%]">
@@ -25,7 +25,7 @@ const Featured = () => {
                     Featured News
                 </h2>
                 <ul className="flex flex-col items-center gap-6">
-                    {featuredNews.map((item) => <FeaturedNews key={item.id} item={item}></FeaturedNews>)}
+                    {/* {featuredNews.map((item) => <FeaturedNews key={item.id} item={item}></FeaturedNews>)} */}
                 </ul>
             </div>
         </section>

@@ -1,27 +1,28 @@
 
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from 'next/image';
-import { CompanyNameProps, InternationOfficesProps } from "../types";
-import { API_INTERNATIONAL_OFFICES } from '../api';
+import React, { useEffect } from "react";
+// import Image from 'next/image';
+import { CompanyNameProps } from "../types";
+// import { CompanyNameProps, InternationOfficesProps } from "../types";
+// import { API_INTERNATIONAL_OFFICES } from '../api';
 
-const fetcherInternationalOffices = async (...args: Parameters<typeof fetch>): Promise<InternationOfficesProps[]> => {
-    const response = await fetch(...args);
-    return response.json();
-};
+// const fetcherInternationalOffices = async (...args: Parameters<typeof fetch>): Promise<InternationOfficesProps[]> => {
+//     const response = await fetch(...args);
+//     return response.json();
+// };
 
 const InternationalOffices = ({companyName}: CompanyNameProps) => {
-  const [internationalOffices, setInternationalOffices] = useState<InternationOfficesProps[]>([]);
-  const [isOpen, setOpen] = useState(false);
+  // const [internationalOffices, setInternationalOffices] = useState<InternationOfficesProps[]>([]);
+  // const [isOpen, setOpen] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetcherInternationalOffices(API_INTERNATIONAL_OFFICES);
-        setInternationalOffices(data);
+        // const data = await fetcherInternationalOffices(API_INTERNATIONAL_OFFICES);
+        // setInternationalOffices(data);
       } catch (err) {
         console.error('Error fetching international offices:', err);
       } finally {
-        setOpen(false);
+        // setOpen(false);
       }
     };
     fetchData();
@@ -33,7 +34,7 @@ const InternationalOffices = ({companyName}: CompanyNameProps) => {
         <h2 className="text-xl text-white tracking-wide font-medium mb-6">
           {companyName} International Offices
         </h2>
-        <div className="max-w-[300px]">
+        {/* <div className="max-w-[300px]">
           <ul className="grid grid-cols-4 gap-3 mb-4">
             {internationalOffices.slice(0, 8).map((item) => {
               return (
@@ -97,7 +98,7 @@ const InternationalOffices = ({companyName}: CompanyNameProps) => {
               View less
             </button>
           )}
-        </div>
+        </div> */}
       </section>
     </>
   );

@@ -17,7 +17,7 @@ const NewsCard = ({
   const date = formatDateRange(news_date);
 
   return (
-   <li className="flex flex-col justify-between mx-auto h-full bg-white overflow-x-hidden rounded-t-sm w-full" style={{boxShadow: `rgba(0, 0, 0, 0.24) 0px 3px 8px`}}>
+   <Card className="flex flex-col justify-between h-full bg-white overflow-x-hidden w-full p-0">
         {/* Image */}
         <div className="flex-shrink-0 w-full">
           <img 
@@ -44,7 +44,7 @@ const NewsCard = ({
           </div>
 
         </div>
-   </li>
+   </Card>
   );
 };
 
