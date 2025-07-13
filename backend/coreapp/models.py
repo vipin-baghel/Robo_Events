@@ -170,6 +170,11 @@ class Event(models.Model):
         null=True,
         help_text="URL of the image to display for this event"
     )
+    how_to_register = models.TextField(blank=True, help_text="Step-by-step guide on how to register for the event")
+    rules_for_robo_building = models.TextField(blank=True, help_text="Specific rules and guidelines for building the robot")
+    event_area_description = models.TextField(blank=True, help_text="Description of the event area/arena")
+    gameplay_rules = models.TextField(blank=True, help_text="Detailed rules for gameplay")
+    competition_info = models.TextField(blank=True, help_text="Additional competition information and guidelines")
 
     def __str__(self):
         return self.name

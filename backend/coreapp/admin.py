@@ -50,7 +50,7 @@ class ChampionshipAdmin(ImportExportModelAdmin):
 @admin.register(Event)
 class EventAdmin(ImportExportModelAdmin):
     resource_class = EventResource
-    list_display = ("name", "start_date", "end_date", "location", "organized_by", "display_in_navigation", "image_preview")
+    list_display = ("name", "start_date", "end_date", "location", "display_in_navigation", "image_preview")
     search_fields = ("name", "slug", "location", "organized_by", "sponsored_by")
     list_filter = ("display_in_navigation", "start_date")
     prepopulated_fields = {"slug": ("name",)}
@@ -61,6 +61,12 @@ class EventAdmin(ImportExportModelAdmin):
         }),
         ('Event Details', {
             'fields': ('start_date', 'end_date', 'location')
+        }),
+        ('Registration & Rules', {
+            'fields': ('how_to_register', 'rules_for_robo_building', 'gameplay_rules')
+        }),
+        ('Event Information', {
+            'fields': ('event_area_description', 'competition_info')
         }),
         ('Additional Information', {
             'classes': ('collapse',),
