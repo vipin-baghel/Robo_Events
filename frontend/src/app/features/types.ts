@@ -96,11 +96,17 @@ export type EventsProps = {
     start_date: string;
     end_date: string;
     location: string;
-    rules_and_eligibility: string,
-    organized_by: string
-    sponsored_by: string
+    rules_and_eligibility: string;
+    organized_by: string;
+    sponsored_by: string;
     display_in_navigation: boolean;
-    championship_id: number,
+    championship_id: number;
+    how_to_register: string;
+    rules_for_robo_building: string;
+    event_area_description: string;
+    gameplay_rules: string;
+    competition_info: string;
+
 }
 
 export type FooterProps = {
